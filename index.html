@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Giuliano Ortu — Personal Trainer · Cagliari</title>
+<meta name="description" content="Personal Trainer certificato a Cagliari. Allenamento su misura, programmazione, coaching nutrizionale. Tre pacchetti: Standard, Silver, Gold." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="components.jsx"></script>
+<script type="text/babel" src="page-home.jsx"></script>
+<script type="text/babel" src="page-esperienza.jsx"></script>
+<script type="text/babel" src="page-pacchetti.jsx"></script>
+<script type="text/babel" src="page-contatti.jsx"></script>
+
+<script type="text/babel">
+const NAV = [
+  { id: 'home', label: 'Home' },
+  { id: 'esperienza', label: 'Esperienza' },
+  { id: 'pacchetti', label: 'Pacchetti' },
+  { id: 'contatti', label: 'Contatti' },
+];
+
+function readRoute() {
+  const h = (window.location.hash || '').replace(/^#\/?/, '');
+  const [page, ...rest] = h.split('/');
+  if (!page) return { page: 'home', params: {} };
+  const params = {};
+  for (let i = 0; i < rest.length; i += 2) {
+    if (rest[i]) params[rest[i]] = decodeURIComponent(rest[i+1] || '');
+  }
+  return { page, params };
+}
+
+function App() {
+  const [route, setRoute] = React.useState(readRoute());
+  const [scrolled, setScrolled] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const onHash = () => setRoute(readRoute());
+    window.addEventListener('hashchange', onHash);
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('hashchange', onHash);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    setMobileOpen(false);
+  }, [route.page, route.params.pack]);
+
+  const go = (page, params = {}) => {
+    const tail = Object.entries(params).map(([k, v]) => `${k}/${encodeURIComponent(v)}`).join('/');
+    window.location.hash = `#/${page}${tail ? '/' + tail : ''}`;
+  };
+  const openContact = (pack, cycle) => {
+    const params = {};
+    if (pack) params.pack = pack;
+    if (cycle && cycle !== 'mensile') params.cycle = cycle;
+    if (Object.keys(params).length) go('contatti', params);
+    else go('contatti');
+  };
+
+  let PageComp = null;
+  const props = { go, openContact };
+  if (route.page === 'home') PageComp = <PageHome {...props} />;
+  else if (route.page === 'esperienza') PageComp = <PageEsperienza {...props} />;
+  else if (route.page === 'pacchetti') PageComp = <PagePacchetti {...props} />;
+  else if (route.page === 'contatti') PageComp = <PageContatti preselectedPack={route.params.pack} preselectedCycle={route.params.cycle} />;
+  else PageComp = <PageHome {...props} />;
+
+  const year = new Date().getFullYear();
+
+  return (
+    <>
+      <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
+        <Brand onClick={() => go('home')} />
+        <div className="nav-links">
+          {NAV.map((n) => (
+            <button
+              key={n.id}
+              className={`nav-link ${route.page === n.id ? 'active' : ''}`}
+              onClick={() => go(n.id)}>
+              {n.label}
+            </button>
+          ))}
+        </div>
+        <button className="nav-cta" onClick={() => go('contatti')}>
+          Prenota
+        </button>
+        <button className="nav-burger" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
+          {mobileOpen ? <Icons.Close /> : <Icons.Menu />}
+        </button>
+      </nav>
+
+      {mobileOpen && (
+        <div className="mobile-menu">
+          {NAV.map((n) => (
+            <button
+              key={n.id}
+              className={`nav-link ${route.page === n.id ? 'active' : ''}`}
+              onClick={() => go(n.id)}>
+              {n.label}
+            </button>
+          ))}
+          <button className="btn btn-primary" style={{marginTop: 24, alignSelf: 'flex-start'}} onClick={() => go('contatti')}>
+            Prenota una consulenza <span className="arrow">→</span>
+          </button>
+        </div>
+      )}
+
+      {PageComp}
+
+      <footer className="footer">
+        <div className="footer-inner">
+          <div>
+            <Brand onClick={() => go('home')} />
+            <div className="footer-tagline">
+              <em style={{color: 'var(--red)', fontStyle: 'italic'}}>Forza, forma, fiducia.</em><br/>
+              Allenamento su misura, a Cagliari.
+            </div>
+          </div>
+          <div>
+            <h4>Naviga</h4>
+            <ul>
+              {NAV.map((n) => (
+                <li key={n.id}><a href={`#/${n.id}`}>{n.label}</a></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4>Contatti</h4>
+            <ul>
+              <li><a href="tel:+393331234567">+39 333 123 4567</a></li>
+              <li><a href="mailto:giuliano@ortupt.it">giuliano@ortupt.it</a></li>
+              <li><a href="https://instagram.com/" target="_blank" rel="noreferrer">@giuliano.ortu.pt</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Studio</h4>
+            <ul>
+              <li>Via dei Giudicati 14</li>
+              <li>09131 Cagliari (CA)</li>
+              <li>P.IVA 03891450921</li>
+            </ul>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <span>© {year} Giuliano Ortu · Personal Trainer · Tutti i diritti riservati</span>
+          <span>Privacy · Cookie · Termini</span>
+        </div>
+      </footer>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
