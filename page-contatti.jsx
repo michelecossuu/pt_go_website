@@ -1,3 +1,47 @@
+// Custom select that avoids native OS dropdown overlap issues
+const CustomSelect = ({ value, onChange, options, placeholder }) => {
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef(null);
+
+  React.useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  const selected = options.find(o => o.value === value);
+
+  return (
+    <div className="custom-select" ref={ref}>
+      <button
+        type="button"
+        className={`custom-select-trigger ${open ? 'open' : ''}`}
+        onClick={() => setOpen(o => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        <span className={selected ? '' : 'placeholder'}>{selected ? selected.label : placeholder}</span>
+        <svg className="custom-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      {open && (
+        <ul className="custom-select-dropdown" role="listbox">
+          {options.map(o => (
+            <li
+              key={o.value}
+              role="option"
+              aria-selected={value === o.value}
+              className={`custom-select-option ${value === o.value ? 'selected' : ''}`}
+              onMouseDown={() => { onChange(o.value); setOpen(false); }}
+            >
+              {o.label}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
 // Contatti page
 const PageContatti = ({ preselectedPack, preselectedCycle }) => {
   const [pack, setPack] = React.useState(preselectedPack || '');
@@ -85,15 +129,15 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
               <div className="ico"><Icons.Pin /></div>
               <div>
                 <div className="lab">Studio</div>
-                <div className="val">Via dei Giudicati 14<br/>09131 Cagliari (CA)</div>
+                <div className="val">Via Di Triuggio 20<br/>09131 Tiuggio (MB)</div>
               </div>
               <span className="arr">↗</span>
             </a>
 
             <div className="hours-card">
-              <h4>Orari studio</h4>
+              <h4>Orari reperibilità</h4>
               <div className="hours">
-                <div className="hours-row"><span className="day">Lunedì — Venerdì</span><span className="time">07:00 — 21:00</span></div>
+                <div className="hours-row"><span className="day">Lunedì — Venerdì</span><span className="time">08:00 — 21:00</span></div>
                 <div className="hours-row"><span className="day">Sabato</span><span className="time">08:00 — 14:00</span></div>
                 <div className="hours-row closed"><span className="day">Domenica</span><span className="time">Chiuso</span></div>
               </div>
@@ -137,16 +181,20 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
               </div>
               <div className="field">
                 <label>Obiettivo principale</label>
-                <select value={form.goal} onChange={(e) => setForm({...form, goal: e.target.value})}>
-                  <option value="">Seleziona...</option>
-                  <option>Dimagrimento</option>
-                  <option>Aumento massa muscolare</option>
-                  <option>Body recomposition</option>
-                  <option>Forza / powerlifting</option>
-                  <option>Postura / dolori</option>
-                  <option>Riabilitazione</option>
-                  <option>Altro</option>
-                </select>
+                <CustomSelect
+                  value={form.goal}
+                  onChange={(v) => setForm({...form, goal: v})}
+                  placeholder="Seleziona..."
+                  options={[
+                    { value: 'dimagrimento', label: 'Dimagrimento' },
+                    { value: 'massa', label: 'Aumento massa muscolare' },
+                    { value: 'recomp', label: 'Body recomposition' },
+                    { value: 'forza', label: 'Forza / powerlifting' },
+                    { value: 'postura', label: 'Postura / dolori' },
+                    { value: 'riab', label: 'Riabilitazione' },
+                    { value: 'altro', label: 'Altro' },
+                  ]}
+                />
               </div>
             </div>
 
@@ -176,10 +224,10 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
                 <label>Periodo di fatturazione</label>
                 <div className="pack-pills">
                   {[
-                    { id: 'mensile', label: 'Mensile' },
-                    { id: 'trimestrale', label: 'Trimestrale −10%' },
-                    { id: 'semestrale', label: 'Semestrale −15%' },
                     { id: 'annuale', label: 'Annuale −20%' },
+                    { id: 'semestrale', label: 'Semestrale −15%' },
+                    { id: 'trimestrale', label: 'Trimestrale −10%' },
+                    { id: 'mensile', label: 'Mensile' },
                   ].map((c) => (
                     <button
                       key={c.id}

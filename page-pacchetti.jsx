@@ -53,16 +53,16 @@ const PACKS = [
 
 // Billing cycles — discount applies to the equivalent of N months
 const CYCLES = [
-  { id: 'mensile',     label: 'Mensile',           months: 1,  discount: 0,    badge: null },
-  { id: 'trimestrale', label: 'Trimestrale',       months: 3,  discount: 0.10, badge: '−10%' },
-  { id: 'semestrale',  label: 'Semestrale',        months: 6,  discount: 0.15, badge: '−15%' },
-  { id: 'annuale',     label: 'Annuale',           months: 12, discount: 0.20, badge: '−20%' },
+  { id: 'annuale', label: 'Annuale', months: 12, discount: 0.20, badge: '−20%' },
+  { id: 'semestrale', label: 'Semestrale', months: 6, discount: 0.15, badge: '−15%' },
+  { id: 'trimestrale', label: 'Trimestrale', months: 3, discount: 0.10, badge: '−10%' },
+  { id: 'mensile', label: 'Mensile', months: 1, discount: 0, badge: null },
 ];
 
 const fmtPrice = (n) => Math.round(n).toLocaleString('it-IT');
 
 const PagePacchetti = ({ go, openContact }) => {
-  const [cycleId, setCycleId] = React.useState('mensile');
+  const [cycleId, setCycleId] = React.useState('annuale');
   const cycle = CYCLES.find((c) => c.id === cycleId);
 
   return (

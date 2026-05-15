@@ -7,16 +7,16 @@ const PageHome = ({ go }) => {
         <div>
           <div className="hero-eyebrow">
             <span className="brand-rule"><span></span><span></span></span>
-            <span className="eyebrow">Personal Trainer · Cagliari</span>
+            <span className="eyebrow">Personal Trainer · Monza & Brianza</span>
           </div>
           <h1 className="display">
-            <span className="first">Forza,</span><br/>
-            <span className="first">forma,</span><br/>
-            <span className="last">fiducia.</span>
+            <span className="first">Disciplina,</span><br/>
+            <span className="first">evoluzione,</span><br/>
+            <span className="last">risultati.</span>
           </h1>
           <p className="hero-sub">
             Allenamento su misura per chi vuole risultati reali, senza scorciatoie.
-            Tu, i tuoi obiettivi, un metodo costruito intorno alla tua vita.
+            Tu, i tuoi obiettivi, un metodo costruito intorno alla tua quotidianità.
           </p>
           <div className="hero-ctas">
             <button className="btn btn-primary" onClick={() => go('pacchetti')}>
@@ -134,7 +134,7 @@ const PageHome = ({ go }) => {
             <div className="price">€50<small>/mese</small></div>
             <p style={{color: 'var(--text-dim)', fontSize: 14, margin: 0, lineHeight: 1.5}}>Schede ogni 6-8 settimane, check-in bi-settimanali.</p>
           </div>
-          <div className="pack-tease silver" onClick={() => go('pacchetti')}>
+          <div className="pack-tease featured" onClick={() => go('pacchetti')}>
             <div className="grade">02 · Più scelto</div>
             <div className="name">Transformation</div>
             <div className="price">€90<small>/mese</small></div>

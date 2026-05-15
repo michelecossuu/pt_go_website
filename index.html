@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Giuliano Ortu — Personal Trainer · Cagliari</title>
-<meta name="description" content="Personal Trainer certificato a Cagliari. Allenamento su misura, programmazione, coaching nutrizionale. Tre pacchetti: Standard, Silver, Gold." />
+<title>Giuliano Ortu — Personal Trainer · Monza & Brianza</title>
+<meta name="description" content="Personal Trainer certificato a Monza & Brianza. Allenamento su misura, programmazione, coaching nutrizionale. Tre pacchetti: Standard, Silver, Gold." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -101,7 +101,7 @@ function App() {
             </button>
           ))}
         </div>
-        <button className="nav-cta" onClick={() => go('contatti')}>
+        <button className="nav-cta" onClick={() => go('contatti')} style={{visibility: route.page === 'contatti' ? 'hidden' : 'visible'}}>
           Prenota
         </button>
         <button className="nav-burger" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
@@ -119,9 +119,11 @@ function App() {
               {n.label}
             </button>
           ))}
-          <button className="btn btn-primary" style={{marginTop: 24, alignSelf: 'flex-start'}} onClick={() => go('contatti')}>
-            Prenota una consulenza <span className="arrow">→</span>
-          </button>
+          {route.page !== 'contatti' && (
+            <button className="btn btn-primary" style={{marginTop: 24, alignSelf: 'flex-start'}} onClick={() => go('contatti')}>
+              Prenota una consulenza <span className="arrow">→</span>
+            </button>
+          )}
         </div>
       )}
 
@@ -132,8 +134,8 @@ function App() {
           <div>
             <Brand onClick={() => go('home')} />
             <div className="footer-tagline">
-              <em style={{color: 'var(--red)', fontStyle: 'italic'}}>Forza, forma, fiducia.</em><br/>
-              Allenamento su misura, a Cagliari.
+              <em style={{color: 'var(--red)', fontStyle: 'italic'}}>Disciplina, evoluzione, risultati.</em><br/>
+              Allenamento su misura, a Monza & Brianza.
             </div>
           </div>
           <div>
@@ -155,9 +157,9 @@ function App() {
           <div>
             <h4>Studio</h4>
             <ul>
-              <li>Via dei Giudicati 14</li>
-              <li>09131 Cagliari (CA)</li>
-              <li>P.IVA 03891450921</li>
+              <li>Via Di Triuggio</li>
+              <li>Tiuggio (MB)</li>
+              <li>P.IVA 00011112222</li>
             </ul>
           </div>
         </div>

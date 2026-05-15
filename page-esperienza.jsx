@@ -11,7 +11,7 @@ const PageEsperienza = ({ go }) => {
         />
         <div className="bio">
           <div className="bio-portrait">
-            <div className="badge"><span className="dot"></span>Disponibile · Cagliari</div>
+            <div className="badge"><span className="dot"></span>Disponibile · Monza & Brianza</div>
           </div>
           <div className="bio-body">
             <p>
@@ -42,7 +42,7 @@ const PageEsperienza = ({ go }) => {
             <div>
               <div className="yr">2014 · Laurea Magistrale</div>
               <h4>Scienze e Tecniche dello Sport</h4>
-              <p className="org">Università degli Studi di Cagliari · 110 / 110 con lode</p>
+              <p className="org">Università degli Studi di Alghero · 110 / 110 con lode</p>
             </div>
           </div>
           <div className="cred">
@@ -142,7 +142,7 @@ const PageEsperienza = ({ go }) => {
           </div>
           <div className="tl-item">
             <div className="yr">2023 — Oggi</div>
-            <h4>Studio Privato · Cagliari</h4>
+            <h4>Studio Privato · Monza & Brianza</h4>
             <p>Spazio personale dedicato 1-to-1, con valutazione funzionale, area pesi e nutrizione integrata.</p>
           </div>
         </div>
@@ -152,7 +152,7 @@ const PageEsperienza = ({ go }) => {
       <section className="section" style={{paddingTop: 0}}>
         <div className="cta-banner">
           <div className="cta-banner-inner">
-            <h3 className="display">Vediamoci di persona,<br/>la prima volta è <em>offerta da me</em>.</h3>
+            <h3 className="display">Fissiamo un incontro,<br/>la prima volta è <em>offerta da me</em>.</h3>
             <button className="btn btn-primary" onClick={() => go('contatti')}>
               Prenota la consulenza <span className="arrow">→</span>
             </button>
