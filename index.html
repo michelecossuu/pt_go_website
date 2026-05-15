@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Giuliano Ortu — Personal Trainer · Monza & Brianza</title>
-<meta name="description" content="Personal Trainer certificato a Monza & Brianza. Allenamento su misura, programmazione, coaching nutrizionale. Tre pacchetti: Standard, Silver, Gold." />
+<title>Giuliano Ortu — Personal Trainer · Monza &amp; Brianza</title>
+<meta name="description" content="Personal Trainer certificato a Monza &amp; Brianza. Allenamento su misura, programmazione, coaching nutrizionale." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,6 +19,7 @@
 <body>
 <div id="root"></div>
 
+<script type="text/babel" src="content.js"></script>
 <script type="text/babel" src="components.jsx"></script>
 <script type="text/babel" src="page-home.jsx"></script>
 <script type="text/babel" src="page-esperienza.jsx"></script>
@@ -26,12 +27,7 @@
 <script type="text/babel" src="page-contatti.jsx"></script>
 
 <script type="text/babel">
-const NAV = [
-  { id: 'home', label: 'Home' },
-  { id: 'esperienza', label: 'Esperienza' },
-  { id: 'pacchetti', label: 'Pacchetti' },
-  { id: 'contatti', label: 'Contatti' },
-];
+const NAV = CONTENT.nav;
 
 function readRoute() {
   const h = (window.location.hash || '').replace(/^#\/?/, '');
@@ -121,7 +117,7 @@ function App() {
           ))}
           {route.page !== 'contatti' && (
             <button className="btn btn-primary" style={{marginTop: 24, alignSelf: 'flex-start'}} onClick={() => go('contatti')}>
-              Prenota una consulenza <span className="arrow">→</span>
+              {CONTENT.home.hero.ctaGhost} <span className="arrow">→</span>
             </button>
           )}
         </div>
@@ -134,12 +130,12 @@ function App() {
           <div>
             <Brand onClick={() => go('home')} />
             <div className="footer-tagline">
-              <em style={{color: 'var(--red)', fontStyle: 'italic'}}>Disciplina, evoluzione, risultati.</em><br/>
-              Allenamento su misura, a Monza & Brianza.
+              <em style={{color: 'var(--red)', fontStyle: 'italic'}}>{CONTENT.brand.tagline}</em><br/>
+              {CONTENT.brand.taglineSub}
             </div>
           </div>
           <div>
-            <h4>Naviga</h4>
+            <h4>{CONTENT.footer.nav}</h4>
             <ul>
               {NAV.map((n) => (
                 <li key={n.id}><a href={`#/${n.id}`}>{n.label}</a></li>
@@ -147,25 +143,25 @@ function App() {
             </ul>
           </div>
           <div>
-            <h4>Contatti</h4>
+            <h4>{CONTENT.footer.contacts}</h4>
             <ul>
-              <li><a href="tel:+393331234567">+39 333 123 4567</a></li>
-              <li><a href="mailto:giuliano@ortupt.it">giuliano@ortupt.it</a></li>
-              <li><a href="https://instagram.com/" target="_blank" rel="noreferrer">@giuliano.ortu.pt</a></li>
+              <li><a href={CONTENT.contact.phoneTel}>{CONTENT.contact.phone}</a></li>
+              <li><a href={CONTENT.contact.emailHref}>{CONTENT.contact.email}</a></li>
+              <li><a href={CONTENT.contact.instagramUrl} target="_blank" rel="noreferrer">{CONTENT.contact.instagram}</a></li>
             </ul>
           </div>
           <div>
-            <h4>Studio</h4>
+            <h4>{CONTENT.footer.studio}</h4>
             <ul>
-              <li>Via Di Triuggio</li>
-              <li>Tiuggio (MB)</li>
-              <li>P.IVA 00011112222</li>
+              <li>{CONTENT.contact.address}</li>
+              <li>{CONTENT.contact.city}</li>
+              <li>{CONTENT.brand.vatId}</li>
             </ul>
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© {year} Giuliano Ortu · Personal Trainer · Tutti i diritti riservati</span>
-          <span>Privacy · Cookie · Termini</span>
+          <span>© {year} {CONTENT.brand.fullName} · {CONTENT.brand.title} · Tutti i diritti riservati</span>
+          <span>{CONTENT.footer.legalLinks}</span>
         </div>
       </footer>
     </>

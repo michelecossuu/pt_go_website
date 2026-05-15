@@ -44,10 +44,13 @@ const CustomSelect = ({ value, onChange, options, placeholder }) => {
 
 // Contatti page
 const PageContatti = ({ preselectedPack, preselectedCycle }) => {
+  const { contact, contatti } = CONTENT;
+  const { form, thankYou, intro } = contatti;
+
   const [pack, setPack] = React.useState(preselectedPack || '');
   const [cycle, setCycle] = React.useState(preselectedCycle || 'mensile');
   const [sent, setSent] = React.useState(false);
-  const [form, setForm] = React.useState({ name: '', email: '', phone: '', goal: '', message: '', consent: false });
+  const [formData, setFormData] = React.useState({ name: '', email: '', phone: '', goal: '', message: '', consent: false });
   const [errors, setErrors] = React.useState({});
 
   React.useEffect(() => {
@@ -57,9 +60,9 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
 
   const validate = () => {
     const e = {};
-    if (!form.name.trim()) e.name = 'Inserisci il tuo nome';
-    if (!form.email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) e.email = 'Email non valida';
-    if (!form.consent) e.consent = 'Necessario per procedere';
+    if (!formData.name.trim()) e.name = form.errors.name;
+    if (!formData.email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) e.email = form.errors.email;
+    if (!formData.consent) e.consent = form.errors.consent;
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -78,9 +81,9 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
             <div className="thank-you">
               <div className="ico"><Icons.Check s={32}/></div>
               <h3 className="display">Messaggio <span style={{color: 'var(--red)', fontStyle: 'italic'}}>ricevuto</span>.</h3>
-              <p>Grazie {form.name.split(' ')[0]}. Ti rispondo entro 24 ore con i prossimi passi e un orario per la consulenza gratuita.</p>
-              <button className="btn btn-ghost" onClick={() => { setSent(false); setForm({ name: '', email: '', phone: '', goal: '', message: '', consent: false }); setPack(''); }}>
-                Invia un altro messaggio
+              <p>{thankYou.pretext}{formData.name.split(' ')[0]}{thankYou.posttext}</p>
+              <button className="btn btn-ghost" onClick={() => { setSent(false); setFormData({ name: '', email: '', phone: '', goal: '', message: '', consent: false }); setPack(''); }}>
+                {thankYou.reset}
               </button>
             </div>
           </div>
@@ -92,36 +95,32 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
   return (
     <div className="page" data-screen-label="Contatti">
       <section className="section">
-        <SectionHeader
-          eyebrow="Contatti"
-          title="Scrivimi.<br/>La prima consulenza è <em>gratuita</em>."
-          meta="Rispondo personalmente entro 24 ore. Niente segreteria, niente form passati a uno staff: parli con me."
-        />
+        <SectionHeader eyebrow={intro.eyebrow} title={intro.title} meta={intro.meta} />
 
         <div className="contact-grid">
           {/* Sidebar: contact info */}
           <div className="contact-info">
-            <a className="contact-card" href="tel:+393331234567">
+            <a className="contact-card" href={contact.phoneTel}>
               <div className="ico"><Icons.Phone /></div>
               <div>
                 <div className="lab">Telefono · WhatsApp</div>
-                <div className="val">+39 333 123 4567</div>
+                <div className="val">{contact.phone}</div>
               </div>
               <span className="arr">↗</span>
             </a>
-            <a className="contact-card" href="mailto:giuliano@ortupt.it">
+            <a className="contact-card" href={contact.emailHref}>
               <div className="ico"><Icons.Mail /></div>
               <div>
                 <div className="lab">Email</div>
-                <div className="val">giuliano@ortupt.it</div>
+                <div className="val">{contact.email}</div>
               </div>
               <span className="arr">↗</span>
             </a>
-            <a className="contact-card" href="https://instagram.com/" target="_blank" rel="noreferrer">
+            <a className="contact-card" href={contact.instagramUrl} target="_blank" rel="noreferrer">
               <div className="ico"><Icons.Instagram /></div>
               <div>
                 <div className="lab">Instagram</div>
-                <div className="val">@giuliano.ortu.pt</div>
+                <div className="val">{contact.instagram}</div>
               </div>
               <span className="arr">↗</span>
             </a>
@@ -129,7 +128,7 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
               <div className="ico"><Icons.Pin /></div>
               <div>
                 <div className="lab">Studio</div>
-                <div className="val">Via Di Triuggio 20<br/>09131 Tiuggio (MB)</div>
+                <div className="val">{contact.address}<br/>{contact.postalCode} {contact.city}</div>
               </div>
               <span className="arr">↗</span>
             </a>
@@ -137,9 +136,12 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
             <div className="hours-card">
               <h4>Orari reperibilità</h4>
               <div className="hours">
-                <div className="hours-row"><span className="day">Lunedì — Venerdì</span><span className="time">08:00 — 21:00</span></div>
-                <div className="hours-row"><span className="day">Sabato</span><span className="time">08:00 — 14:00</span></div>
-                <div className="hours-row closed"><span className="day">Domenica</span><span className="time">Chiuso</span></div>
+                {contact.hours.map((h) => (
+                  <div key={h.label} className={`hours-row${h.closed ? ' closed' : ''}`}>
+                    <span className="day">{h.label}</span>
+                    <span className="time">{h.time}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -151,9 +153,9 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
                 <label>Nome e cognome *</label>
                 <input
                   type="text"
-                  value={form.name}
-                  onChange={(e) => setForm({...form, name: e.target.value})}
-                  placeholder="Mario Rossi"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  placeholder={form.placeholders.name}
                 />
                 {errors.name && <div className="err">{errors.name}</div>}
               </div>
@@ -161,9 +163,9 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
                 <label>Email *</label>
                 <input
                   type="email"
-                  value={form.email}
-                  onChange={(e) => setForm({...form, email: e.target.value})}
-                  placeholder="mario@email.it"
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  placeholder={form.placeholders.email}
                 />
                 {errors.email && <div className="err">{errors.email}</div>}
               </div>
@@ -174,26 +176,18 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
                 <label>Telefono (opzionale)</label>
                 <input
                   type="tel"
-                  value={form.phone}
-                  onChange={(e) => setForm({...form, phone: e.target.value})}
-                  placeholder="+39 ___ ___ ____"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  placeholder={form.placeholders.phone}
                 />
               </div>
               <div className="field">
                 <label>Obiettivo principale</label>
                 <CustomSelect
-                  value={form.goal}
-                  onChange={(v) => setForm({...form, goal: v})}
-                  placeholder="Seleziona..."
-                  options={[
-                    { value: 'dimagrimento', label: 'Dimagrimento' },
-                    { value: 'massa', label: 'Aumento massa muscolare' },
-                    { value: 'recomp', label: 'Body recomposition' },
-                    { value: 'forza', label: 'Forza / powerlifting' },
-                    { value: 'postura', label: 'Postura / dolori' },
-                    { value: 'riab', label: 'Riabilitazione' },
-                    { value: 'altro', label: 'Altro' },
-                  ]}
+                  value={formData.goal}
+                  onChange={(v) => setFormData({...formData, goal: v})}
+                  placeholder={form.placeholders.goal}
+                  options={form.goals}
                 />
               </div>
             </div>
@@ -201,13 +195,7 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
             <div className="field">
               <label>Pacchetto di interesse</label>
               <div className="pack-pills">
-                {[
-                  { id: '', label: 'Non so ancora' },
-                  { id: 'kick', label: 'Kick Starter' },
-                  { id: 'transformation', label: 'Transformation' },
-                  { id: 'elite', label: 'Elite' },
-                  { id: 'singola', label: 'Lezione singola' },
-                ].map((p) => (
+                {form.packOptions.map((p) => (
                   <button
                     key={p.id || 'none'}
                     type="button"
@@ -223,12 +211,7 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
               <div className="field">
                 <label>Periodo di fatturazione</label>
                 <div className="pack-pills">
-                  {[
-                    { id: 'annuale', label: 'Annuale −20%' },
-                    { id: 'semestrale', label: 'Semestrale −15%' },
-                    { id: 'trimestrale', label: 'Trimestrale −10%' },
-                    { id: 'mensile', label: 'Mensile' },
-                  ].map((c) => (
+                  {form.cycleOptions.map((c) => (
                     <button
                       key={c.id}
                       type="button"
@@ -244,27 +227,26 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
             <div className="field">
               <label>Messaggio</label>
               <textarea
-                value={form.message}
-                onChange={(e) => setForm({...form, message: e.target.value})}
-                placeholder="Raccontami qualcosa di te: il tuo punto di partenza, cosa hai già provato, cosa vorresti cambiare..."
+                value={formData.message}
+                onChange={(e) => setFormData({...formData, message: e.target.value})}
+                placeholder={form.placeholders.message}
               />
             </div>
 
             <label className={`consent ${errors.consent ? 'invalid' : ''}`}>
               <input
                 type="checkbox"
-                checked={form.consent}
-                onChange={(e) => setForm({...form, consent: e.target.checked})}
+                checked={formData.consent}
+                onChange={(e) => setFormData({...formData, consent: e.target.checked})}
               />
               <span>
-                Acconsento al trattamento dei miei dati personali per essere ricontattato.
-                I dati non saranno condivisi con terzi e potranno essere cancellati su richiesta.
+                {form.consentText}
                 {errors.consent && <span style={{color: 'var(--red)', display: 'block', marginTop: 4}}>{errors.consent}</span>}
               </span>
             </label>
 
             <div className="form-submit">
-              <span className="note">Risposta entro 24 ore · Consulenza iniziale gratuita</span>
+              <span className="note">{form.submitNote}</span>
               <button type="submit" className="btn btn-primary">
                 Invia messaggio <span className="arrow">→</span>
               </button>
