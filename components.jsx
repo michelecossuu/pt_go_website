@@ -46,4 +46,4 @@ const SectionHeader = ({ eyebrow, title, meta }) => (
   </div>
 );
 
-Object.assign(window, { Icons, Brand, SectionHeader });
+Object.assign(globalThis.window, { Icons, Brand, SectionHeader });
