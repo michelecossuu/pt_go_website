@@ -6,8 +6,8 @@ const PageEsperienza = ({ go }) => {
       <section className="section" style={{paddingBottom: 'clamp(40px, 6vw, 80px)'}}>
         <SectionHeader
           eyebrow="Chi sono"
-          title="Dodici anni di palestra,<br/>palco e <em>persone</em>."
-          meta="Personal Trainer certificato, formato in scienze motorie e specializzato in ricomposizione corporea e riabilitazione funzionale."
+          title="Una vita dedicata allo sport,<br/> alla nutrizione e alle <em>persone</em>."
+          meta="Personal Trainer certificato, formato in anatomia e fisiologia e specializzato in ricomposizione corporea e riabilitazione funzionale."
         />
         <div className="bio">
           <div className="bio-portrait">
@@ -15,9 +15,9 @@ const PageEsperienza = ({ go }) => {
           </div>
           <div className="bio-body">
             <p>
-              Ho iniziato ad allenare a vent'anni in una piccola palestra di quartiere.
-              Dodici anni dopo, ho seguito oltre trecento persone — dall'impiegato che voleva
-              tornare a giocare a calcetto al bodybuilder pronto per la sua prima gara.
+              Ho sempre fatto sport, e mi ha insegnato i valori della disciplina, del controllo e della crescita personale.
+              Per questo motivo, ho deciso di mettermi in gioco come personal trainer per trasmettere agli altri
+              ciò che per me è fondamentale nella vita — la passione, la dedizione e la trasformazione consapevole.
             </p>
             <p>
               Il mio metodo è semplice: <strong style={{color: 'var(--text)'}}>ascolto prima, programmo dopo</strong>.

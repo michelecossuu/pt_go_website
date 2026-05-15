@@ -224,7 +224,12 @@ const PagePacchetti = ({ go, openContact }) => {
             <details key={i} className="faq-item" {...(i === 0 ? { open: true } : {})}>
               <summary>
                 <span>{f.q}</span>
-                <span className="plus">+</span>
+                <span className="plus">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                    <line x1="6" y1="0" x2="6" y2="12"/>
+                    <line x1="0" y1="6" x2="12" y2="6"/>
+                  </svg>
+                </span>
               </summary>
               <div className="ans">{f.a}</div>
             </details>

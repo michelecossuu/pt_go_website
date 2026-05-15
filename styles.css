@@ -1088,7 +1088,6 @@ body {
   border-radius: 50%;
   border: 1px solid var(--line-strong);
   display: grid; place-items: center;
-  font-size: 18px;
   color: var(--text-dim);
   transition: all 240ms cubic-bezier(.2,.7,.3,1);
   flex-shrink: 0;
