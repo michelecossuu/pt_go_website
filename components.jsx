@@ -2,14 +2,11 @@
 const Icons = {
   Logo: ({ size = 40 }) => (
     <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-      {/* Red outer crescent */}
+      <circle cx="50" cy="50" r="48" fill="#0d0d0d"/>
       <path d="M 50 8 A 42 42 0 1 0 92 50" stroke="#e6122e" strokeWidth="9" strokeLinecap="round" fill="none"/>
-      {/* Teal inner crescent */}
       <path d="M 50 22 A 28 28 0 1 0 78 50" stroke="#1ec0b0" strokeWidth="4" strokeLinecap="round" fill="none"/>
-      {/* G */}
-      <text x="32" y="64" fontFamily="Cormorant Garamond, serif" fontSize="44" fontWeight="500" fill="#f4f4f6">G</text>
-      {/* o ring */}
-      <circle cx="72" cy="56" r="9" stroke="#e6122e" strokeWidth="3" fill="none"/>
+      <text x="20" y="66" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="52" fontWeight="600" fill="#f4f4f6">G</text>
+      <text x="55" y="70" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="38" fontWeight="500" fill="#f4f4f6">o</text>
     </svg>
   ),
   Phone: ({s=20}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>,
