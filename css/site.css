@@ -28,4 +28,4 @@ div.ph.ph-empty{display:grid;place-items:center;padding:24px;background:var(--mi
 @media (min-width:961px){.ab-cap{align-self:start;margin-top:-36px}}
 
 /* Hero: su desktop 100svh può risultare qualche px più basso della finestra (Safari) e lascia una striscia chiara sotto */
-@media (min-width:721px){.hx{min-height:min(max(100vh,100svh),940px)}}
+@media (min-width:721px){.hx{min-height:calc(max(100vh,100svh) + var(--hx-tail))}}

@@ -81,7 +81,7 @@ const PageHome = ({ go, openContact }) => {
           </figure>
           <div className="mx-body">
             <div className="mx-head rv">
-              <div className="label"><span className="n">01</span><span className="rule"></span>{method.eyebrow}</div>
+              <div className="label"><span className="rule"></span>{method.eyebrow}</div>
               <h2 className="h2" dangerouslySetInnerHTML={{ __html: method.title }} />
               <p className="meta">{method.meta}</p>
             </div>
@@ -116,15 +116,20 @@ const PageHome = ({ go, openContact }) => {
         </div>
       </section>
 
-      <section className="sec sec-tight">
+      <section className="sec sec-tight tease-sec">
         <div className="wrap">
-          <SectionHead n="02" label={packTeaser.eyebrow} title={packTeaser.title} meta={packTeaser.meta} />
+          <SectionHead label={packTeaser.eyebrow} title={packTeaser.title} meta={packTeaser.meta} />
           <div className="tease rv">
             {CONTENT.packs.map((p) => (
               <button key={p.id} className={`tease-item ${p.featured ? 'feat' : ''}`} onClick={() => go('pacchetti')}>
                 <div className="tier">{p.tier}</div>
                 <div className={`pname ${p.gold ? 'gold' : ''}`}>{p.name[0]}<em>{p.name[1]}</em></div>
                 <p>{p.teaserDesc}</p>
+                {p.teaserPerks && (
+                  <ul className="tease-perks">
+                    {p.teaserPerks.map((t, i) => <li key={i}><Icons.Check /><span>{t}</span></li>)}
+                  </ul>
+                )}
                 <div className="tease-price"><span className="a">€{p.monthly}</span><span className="p">/ mese</span><span className="ar">→</span></div>
               </button>
             ))}

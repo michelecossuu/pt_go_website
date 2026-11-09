@@ -53,6 +53,11 @@ a:hover{color:var(--red)}
 .feat{--text:#eef5f3;--dim:#b2c6c3;--mute:#8ea6a2;--line:rgba(255,255,255,.13);--line-2:rgba(255,255,255,.26);--teal-2:#5ed5c5;--red-soft:#ff8d9b;color:var(--text)}
 .tease-item.feat,.pack.feat{background:var(--petrol);border-color:var(--petrol)}
 .tease-item.feat:hover{background:var(--petrol-2)}
+.tease-perks{display:flex;flex-direction:column;gap:10px;margin:4px 0 0;padding:0;list-style:none}
+.tease-perks li{display:grid;grid-template-columns:16px minmax(0,1fr);gap:10px;align-items:start;font-size:14px;line-height:1.45;font-weight:500}
+.tease-perks svg{margin-top:2px;color:var(--teal)}
+.tease-item.feat .tease-perks li{color:#e3ecea}
+.tease-item.feat .tease-perks svg{color:#5ed5c5}
 .tease-item.feat::before,.pack.feat::before{display:none}
 .feat .pname em{color:#ff7385}
 

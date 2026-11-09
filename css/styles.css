@@ -193,6 +193,9 @@ button{font-family:inherit}
 .tl-i p{color:var(--dim);font-size:14px;line-height:1.65}
 
 /* Pacchetti */
+.perks{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0 auto 20px}
+.perk{display:inline-flex;align-items:center;height:36px;padding:0 18px;border:1px solid rgba(45,212,191,.25);border-radius:999px;background:rgba(45,212,191,.08);color:var(--teal-2);font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.perk-red{border-color:rgba(230,18,46,.4);background:rgba(230,18,46,.12);color:#ff5a6e}
 .cycle{display:flex;gap:4px;width:max-content;max-width:100%;margin:0 auto 56px;padding:5px;overflow-x:auto;border:1px solid var(--line);border-radius:999px;background:var(--bg-1)}
 .cy{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 20px;border:0;border-radius:999px;background:transparent;color:var(--dim);font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;cursor:pointer;transition:background .25s,color .25s}
 .cy:hover{color:var(--text)}
@@ -206,6 +209,15 @@ button{font-family:inherit}
 .pack.feat::before{content:"";position:absolute;inset:-1px -1px auto;height:3px;border-radius:8px 8px 0 0;background:var(--red)}
 .pack .pname{margin-top:16px}
 .pack-desc{min-height:54px;margin:14px 0 32px;font:italic 400 19px/1.4 var(--serif);color:var(--dim)}
+.rates-label{padding-top:24px;border-top:1px solid var(--line);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.rates{list-style:none;margin:14px 0 0;padding:4px 18px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.02)}
+.rates li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:baseline;gap:10px;padding:14px 0;border-top:1px solid var(--line)}
+.rates li:first-child{border-top:0}
+.rl{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.02em}
+.rl .bd{padding:3px 6px;border-radius:4px;background:rgba(45,212,191,.14);color:var(--teal-2);font-style:normal;font-size:10px;font-weight:500}
+.rp{font:500 22px/1 var(--serif);font-variant-numeric:lining-nums}
+.rates li:last-child .rp{color:var(--teal-2)}
+.rm{min-width:64px;text-align:right;font-size:11px;color:var(--mute)}
 .pack-price{display:flex;align-items:baseline;gap:6px;padding-top:28px;border-top:1px solid var(--line)}
 .pack-price .c{font:400 28px/1 var(--serif);color:var(--dim)}
 .pack-price .a{font:500 84px/.9 var(--serif);font-variant-numeric:lining-nums;letter-spacing:-.02em}

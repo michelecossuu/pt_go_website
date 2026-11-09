@@ -38,7 +38,7 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
   const { form, thankYou, intro } = contatti;
 
   const [pack, setPack] = React.useState(preselectedPack || '');
-  const [cycle, setCycle] = React.useState(preselectedCycle || 'mensile');
+  const [cycle, setCycle] = React.useState(preselectedCycle || 'trimestrale');
   const [sent, setSent] = React.useState(false);
   const [data, setData] = React.useState(EMPTY_FORM);
   const [errors, setErrors] = React.useState({});

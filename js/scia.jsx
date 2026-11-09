@@ -100,8 +100,10 @@ const sciaEnd = (c, cta) => {
   const em = cta.querySelector('h2 em'), btn = cta.querySelector('.btn');
   if (!em) return false;
   const er = sciaRect(em), fs = sciaPf(sciaCs(em).fontSize), uy = er.b + fs * 0.08, p0 = c.cur();
-  c.add(p0.x, uy - 72, 'd');
-  c.add(er.l + er.w * 0.3, uy + 8, 'r');
+  // scende nel margine fin sotto la parola, poi gira stretto: la curva non taglia le lettere (es. la gamba della "p")
+  c.add(p0.x, uy - 28, 'd');
+  c.add(Math.min(p0.x + 48, er.l - 8), uy + 12, 'r', 14);
+  c.add(er.l + er.w * 0.3, uy + 12, 'r');
   if (btn) {
     const br = sciaRect(btn), card = sciaRect(cta), by = br.t + br.h / 2;
     if (br.l > er.r + 48) c.add(br.l - 18, by, 'r');
@@ -159,7 +161,9 @@ function sciaHome(page, c) {
   const head = q('.mx-head'), s0 = R(steps[0]);
   if (head && Math.abs(X[side] - railX) > 200) {
     const hb = R(head).b, gy = (hb + s0.t) / 2;
-    add(X[side], Math.max(hb - 220, c.cur().y + 60), 'd');
+    // scende nel margine fino quasi alla fine del testo, poi curva stretta nello spazio sotto: non taglia titolo e paragrafo
+    add(X[side], Math.max(hb - 60, c.cur().y + 60), 'd');
+    add(X[side] + (side ? -70 : 70), gy, side ? 'l' : 'r', 20);
     add(railX + (side ? 90 : -90), gy, side ? 'l' : 'r');
   } else if (head) add(X[side], (R(head).b + s0.t) / 2 - 6, 'd');
   add(railX, s0.t + Math.max(8, Math.min(28, sciaPf(sciaCs(steps[0]).paddingTop) - 6)), 'd');
@@ -312,8 +316,10 @@ function Scia({ pageKey, mode = 'through', ghost = false, stations = false, drop
       while (s.dk > 0 && dl[s.dk - 1] > cur) { s.dk--; de[s.dk].removeAttribute('data-on'); }
     }
     const nds = s.els.nds;
+    const vb = window.scrollY + window.innerHeight * 0.85;   // i contatori partono appena visibili, senza aspettare la freccia
     let j = 0;
     s.st.forEach((x) => {
+      if (x.kind === 'count' && x.y <= vb && !x.el.dataset.sciaDone && x.tn) { x.el.dataset.sciaDone = '1'; if (reduce) x.tn.nodeValue = x.v; else sciaCount(x); }
       const on = x.len <= cur + 2;
       if (x.kind === 'node') { const nd = nds[j++]; if (nd) { if (on) nd.setAttribute('data-on', ''); else nd.removeAttribute('data-on'); } return; }
       if (on === x.on) return;

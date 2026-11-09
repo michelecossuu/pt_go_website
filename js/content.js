@@ -50,9 +50,9 @@ globalThis.window.CONTENT = {
   // `alt` descrive la foto definitiva da scattare.
   home: {
     hero: {
-      eyebrow:    'Personal Trainer · Monza & Brianza',
+      eyebrow:    'Personal Trainer',
       headline:   ['Ascolto,', 'metodo,', 'evoluzione.'],   // l'ultima riga va in corsivo
-      sub:        'Allenamento su misura per chi vuole risultati reali, senza scorciatoie. Tu, i tuoi obiettivi, un metodo costruito intorno alla tua quotidianità.',
+      sub:        'Allenamento su misura per chi vuole risultati reali, senza scorciatoie. Al centro ci sei tu, i tuoi obiettivi, un metodo costruito intorno alla tua quotidianità.',
       ctaPrimary: 'Scopri i pacchetti',
       ctaGhost:   'Prenota una consulenza',
       photo:      { src: px(5327466, 2200), alt: 'Giuliano in palestra · orizzontale, soggetto sulla destra' },
@@ -80,10 +80,10 @@ globalThis.window.CONTENT = {
       title:   'Persone vere,<br/>risultati <em>veri</em>.',
       note:    'Foto pubblicate con il consenso dei clienti.',
       items: [
-        { name: 'Marta R.',  result: '−11 kg · 6 mesi',         before: px(4162544, 700), after: px(3837423, 700)  },
-        { name: 'Luca P.',   result: '+5 kg magri · 8 mesi',    before: px(5496591, 700), after: px(9073246, 700)  },
-        { name: 'Sara M.',   result: '−7 kg · 4 mesi',          before: px(6455942, 700), after: px(12314077, 700) },
-        { name: 'Davide C.', result: 'Ricomposizione · 1 anno', before: px(3838706, 700), after: px(3926644, 700)  },
+        { name: 'Marta T.',  result: '−11 kg · 6 mesi',         before: px(4162544, 700), after: px(3837423, 700)  },
+        { name: 'Michele C.',   result: '+5 kg magri · 8 mesi',    before: px(5496591, 700), after: px(9073246, 700)  },
+        { name: 'Emma T.',   result: '−7 kg · 4 mesi',          before: px(6455942, 700), after: px(12314077, 700) },
+        { name: 'Federico D.', result: 'Ricomposizione · 1 anno', before: px(3838706, 700), after: px(3926644, 700)  },
       ],
     },
     method: {
@@ -91,7 +91,7 @@ globalThis.window.CONTENT = {
       title:   'Un approccio <em>completo</em>, non un programma standard.',
       meta:    'Ogni piano nasce da una valutazione fisica e da una conversazione onesta. Niente copia-incolla, niente promesse vuote.',
       photo:   { src: px(31618281), alt: 'Giuliano durante un esercizio · es. curl con manubrio, verticale' },
-      chip:    { title: 'Consulenza gratuita', sub: 'Il primo passo, senza impegno' },
+      chip:    { title: 'Consulenza gratuita', sub: 'Il primo passo' },
       steps: [
         { title: 'Valutazione iniziale',     desc: 'Test funzionali, analisi posturale e composizione corporea. Si parte dai dati, non dalle sensazioni.' },
         { title: 'Programmazione su misura', desc: 'Schede progressive che si adattano al tuo ritmo settimanale, alla tua condizione e ai tuoi obiettivi.' },
@@ -101,7 +101,7 @@ globalThis.window.CONTENT = {
     effort: {
       eyebrow: 'La fatica buona',
       title:   'Quella che ti lascia<br/><em>più forte</em> di prima.',
-      text:    "L'ultima ripetizione è quella che conta. Ti porto al limite giusto, con tecnica e recupero, mai oltre.",
+      text:    "L'ultima ripetizione è quella che conta. Ti porto al meglio delle tue potenzialità, con tecnica e recupero.",
       photo:   { src: px(3838705, 2000), alt: 'Momento di fatica a fine serie · orizzontale, luce scura' },
       values:  ['Disciplina', 'Costanza', 'Risultati'],
     },
@@ -129,24 +129,14 @@ globalThis.window.CONTENT = {
   // ── Pacchetti (dati) ──────────────────────────────────────────────────────
   packs: [
     {
-      id:         'kick',
+      id:         'essential',
       tier:       '01 · Entry',
-      fullName:   'Core',
-      name:       ['Co', 're'],
+      fullName:   'Essential',
+      name:       ['Ess', 'ential'],
       teaserDesc: 'Schede ogni 6-8 settimane, check-in bi-settimanali.',
-      desc:       'Per chi inizia: una base solida con autonomia e metodo.',
-      monthly:    50,
-      features: [
-        { t: 'Prima call per identificazione obiettivi',    s: true  },
-        { t: 'Schede aggiornate ogni 6—8 settimane',        s: true  },
-        { t: 'Check-in bi-settimanali',                     s: true  },
-        { t: 'Video e spiegazione esercizi',                s: true  },
-        { t: 'Supporto WhatsApp limitato (entro 48h)',      s: true  },
-        { t: 'Revisione esecuzione esercizi',               s: false },
-        { t: 'Adattamento scheda periodico',                s: false },
-        { t: 'Linee guida nutrizionali',                    s: false },
-        { t: 'Piano alimentare completo',                   s: false },
-      ],
+      desc:       'La base solida: programmazione, metodo e costanza per partire bene.',
+      monthly:    50,                                         // equivalente mensile sul trimestrale (teaser home)
+      prices:     { trimestrale: 150, semestrale: 270, annuale: 510 },
     },
     {
       id:         'transformation',
@@ -154,57 +144,72 @@ globalThis.window.CONTENT = {
       fullName:   'Transformation',
       name:       ['Trans', 'formation'],
       teaserDesc: 'Check-in settimanali, supporto continuo, linee guida nutrizionali.',
-      desc:       "Il percorso più richiesto: accountability, ritmo e adattamenti continui.",
-      monthly:    90,
-      featured:   true,
-      features: [
-        { t: 'Tutto del piano Kick Starter',                s: true,  bold: true },
-        { t: 'Check-in settimanali',                        s: true  },
-        { t: 'Supporto WhatsApp (risposta entro 24h)',       s: true  },
-        { t: 'Revisione esecuzione esercizi',               s: true  },
-        { t: 'Adattamento scheda periodico',                s: true  },
-        { t: 'Linee guida nutrizionali',                    s: true  },
-        { t: 'Piano alimentare completo',                   s: false },
-        { t: '1:1 mensile di revisione',                    s: false },
+      teaserPerks: [                                          // punti di valore nel teaser home
+        'Revisione della tua esecuzione',
+        'Scheda adattata ai tuoi progressi',
+        'Risposta su WhatsApp entro 24h',
       ],
+      desc:       'Il percorso più richiesto: supporto, ritmo e adattamenti continui.',
+      monthly:    83,
+      prices:     { trimestrale: 250, semestrale: 450, annuale: 850 },
+      featured:   true,
     },
     {
-      id:         'elite',
+      id:         'revolution',
       tier:       '03 · Premium',
       fullName:   'Revolution',
-      name:       ['Revol', 'ution'],
+      name:       ['Revo', 'lution'],
       teaserDesc: 'Piano alimentare completo e 1:1 mensile di revisione.',
-      desc:       "L'esperienza completa: piano alimentare, revisione 1:1 e priorità totale.",
-      monthly:    120,
-      gold:       true,
-      features: [
-        { t: 'Tutto del piano Transformation',              s: true,  bold: true },
-        { t: 'Supporto WhatsApp prioritario',               s: true  },
-        { t: 'Piano alimentare completo',                   s: true  },
-        { t: '1:1 mensile di revisione',                    s: true  },
+      teaserPerks: [
+        'Tutto il piano Transformation',
+        'Supporto WhatsApp prioritario',
+        'Priorità totale in agenda',
       ],
+      desc:       "L'esperienza completa: indicazioni alimentari, revisione 1:1 e priorità totale.",
+      monthly:    110,
+      prices:     { trimestrale: 330, semestrale: 594, annuale: 1122 },
+      gold:       true,
     },
   ],
 
+  // ── Voci incluse nei pacchetti ────────────────────────────────────────────
+  // Elenco unico, dal piano base al più completo. `in` = pacchetti che la includono.
+  // `v` = testo specifico per pacchetto (se diverso da `t`).
+  // Ogni card mostra le voci incluse + quelle dei piani superiori (barrate).
+  features: [
+    { t: 'Prima call identificazione obiettivi', in: ['essential', 'transformation', 'revolution'] },
+    { t: 'Check-in settimanali',                 in: ['essential', 'transformation', 'revolution'], v: { essential: 'Check-in bi-settimanali' } },
+    { t: 'Schede aggiornate ogni 6—8 settimane', in: ['essential', 'transformation', 'revolution'] },
+    { t: 'Video e spiegazione esercizi',         in: ['essential', 'transformation', 'revolution'] },
+    { t: 'Supporto WhatsApp',                    in: ['essential', 'transformation', 'revolution'], v: { essential: 'Supporto WhatsApp (entro 48h)', transformation: 'Supporto WhatsApp (entro 24h)', revolution: 'Supporto WhatsApp prioritario' } },
+    { t: 'Revisione esecuzione esercizi',        in: ['transformation', 'revolution'] },
+    { t: 'Adattamento scheda periodico',         in: ['transformation', 'revolution'] },
+    { t: 'Linee guida nutrizionali',             in: ['transformation', 'revolution'] },
+    { t: 'Piano alimentare completo',            in: ['revolution'] },
+    { t: '1:1 mensile di revisione',             in: ['revolution'] },
+    { t: 'Priorità totale in agenda',            in: ['revolution'] },
+  ],
+
   // ── Cicli di fatturazione ─────────────────────────────────────────────────
+  // I prezzi per ciclo stanno in packs[].prices; `discount` serve solo per i testi.
   cycles: [
-    { id: 'annuale',     label: 'Annuale',     months: 12, discount: 0.20, badge: '−20%' },
-    { id: 'semestrale',  label: 'Semestrale',  months: 6,  discount: 0.15, badge: '−15%' },
-    { id: 'trimestrale', label: 'Trimestrale', months: 3,  discount: 0.10, badge: '−10%' },
-    { id: 'mensile',     label: 'Mensile',     months: 1,  discount: 0,    badge: null    },
+    { id: 'annuale',     label: 'Annuale',     months: 12, discount: 0.15, badge: '−15%' },
+    { id: 'semestrale',  label: 'Semestrale',  months: 6,  discount: 0.10, badge: '−10%' },
+    { id: 'trimestrale', label: 'Trimestrale', months: 3,  discount: 0,    badge: null    },
   ],
 
   // ── Pagina Pacchetti ──────────────────────────────────────────────────────
   pacchetti: {
     eyebrow: 'I Pacchetti',
     title:   "Tre percorsi.<br/>Il <em>tuo</em>, in fondo, è uno solo.",
-    meta:    'Tutti i pacchetti includono prima call gratuita di identificazione obiettivi. Sconti progressivi su trimestrale, semestrale e annuale.',
+    meta:    'Coaching 1:1 su misura. Allenati dove vuoi: io porto metodo, programmazione e supporto costante.',
+    perks:   ['Prima call gratuita', 'Sconti fino a −15%'],
     singleLesson: {
-      eyebrow: 'Senza pacchetto',
-      title:   'Lezione singola',
-      desc:    'Una sessione 1:1, senza impegno. Ideale per provare il metodo o per una consulenza tecnica specifica.',
-      price:   '€50',
-      per:     '/ora',
+      eyebrow: 'Scheda',
+      title:   'Ti preparo la scheda di allenamento personalizzata',
+      desc:    'Senza pacchetto: una scheda costruita sui tuoi obiettivi. Prima call gratuita inclusa.',
+      price:   '€40',
+      per:     'una tantum',
     },
     compare: {
       label: 'Cosa è incluso',
@@ -219,14 +224,14 @@ globalThis.window.CONTENT = {
         ['Linee guida nutrizionali',             '—',             '✓',           '✓'        ],
         ['Piano alimentare completo',            '—',             '—',           '✓'        ],
         ['1:1 mensile di revisione',             '—',             '—',           '✓'        ],
-        ['Prezzo mensile',                       '€50',           '€90',         '€120'     ],
-        ['Annuale (−20%)',                       '€480',          '€864',        '€1.152'   ],
+        ['Priorità totale in agenda',            '—',             '—',           '✓'        ],
       ],
+      // Le righe prezzo (una per ciclo) sono generate da packs[].prices
     },
     faq: [
       {
-        q: 'Come funzionano gli sconti su trimestrale, semestrale e annuale?',
-        a: "Più lungo è l'impegno, più scende il prezzo mensile equivalente: −10% sul trimestrale, −15% sul semestrale, −20% sull'annuale. Il pagamento avviene in un'unica soluzione al momento dell'attivazione.",
+        q: 'Come funzionano gli sconti su semestrale e annuale?',
+        a: "Più lungo è l'impegno, più scende il prezzo mensile equivalente: il trimestrale è la base, −10% sul semestrale, −15% sull'annuale. Il pagamento avviene in un'unica soluzione al momento dell'attivazione.",
       },
       {
         q: 'Posso cambiare pacchetto durante il percorso?',
@@ -242,15 +247,15 @@ globalThis.window.CONTENT = {
       },
       {
         q: 'Il piano alimentare è incluso in tutti i pacchetti?',
-        a: "Le linee guida nutrizionali sono incluse dal Transformation. Il piano alimentare completo, con calcolo dei macronutrienti e indicazioni sui pasti, è incluso solo nell'Elite.",
+        a: "Le linee guida nutrizionali sono incluse dal Transformation. Il piano alimentare completo, con calcolo dei macronutrienti e indicazioni sui pasti, è incluso solo nel Revolution.",
       },
       {
         q: 'Lavori con principianti?',
         a: 'Sì, e con piacere. Anzi, è uno dei momenti più importanti per impostare bene tutto: tecnica, abitudini, mentalità. Non serve "essere in forma" per iniziare.',
       },
       {
-        q: 'Posso prendere solo una lezione singola?',
-        a: "Certo: 50€/ora, una sessione 1:1 senza impegno. Utile per provare il metodo o per una valutazione tecnica specifica.",
+        q: 'Posso avere solo la scheda, senza pacchetto?',
+        a: "Certo: ti preparo la scheda di allenamento personalizzata a 40€ una tantum, dopo una prima call gratuita per capire i tuoi obiettivi.",
       },
     ],
     cta: {
@@ -360,11 +365,20 @@ globalThis.window.CONTENT = {
 };
 
 // ── Dati derivati (calcolati da CONTENT) ──────────────────────────────────
+// Voci di ogni pacchetto — derivate da CONTENT.features
+// s: true = inclusa, s: false = presente solo nei piani superiori (barrata)
+CONTENT.packs.forEach((p) => {
+  p.features = CONTENT.features.map((f) => ({
+    t: (f.v && f.v[p.id]) || f.t,
+    s: f.in.includes(p.id),
+  }));
+});
+
 // Opzioni pacchetto per il form contatti — derivate da CONTENT.packs
 CONTENT.contatti.form.packOptions = [
   { id: '',        label: 'Non so ancora'  },
   ...CONTENT.packs.map((p) => ({ id: p.id, label: p.fullName })),
-  { id: 'singola', label: 'Lezione singola' },
+  { id: 'singola', label: 'Solo scheda (€40)' },
 ];
 
 // Opzioni ciclo per il form contatti — derivate da CONTENT.cycles

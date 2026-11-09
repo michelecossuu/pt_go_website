@@ -1,8 +1,11 @@
 const PagePacchetti = ({ openContact }) => {
   const { packs, cycles, pacchetti } = CONTENT;
   const { singleLesson, compare, faq, cta } = pacchetti;
-  const [cycleId, setCycleId] = React.useState('annuale');
-  const cycle = cycles.find((c) => c.id === cycleId);
+  const rates = [...cycles].reverse();   // trimestrale → semestrale → annuale
+  const priceRows = rates.map((c) => [
+    c.badge ? `${c.label} (${c.badge})` : c.label,
+    ...packs.map((p) => `€${fmtPrice(p.prices[c.id])}`),
+  ]);
   const colCls = (p) => (p.featured ? 'f' : p.gold ? 'g' : '');
 
   return (
@@ -11,32 +14,27 @@ const PagePacchetti = ({ openContact }) => {
         <div className="wrap">
           <SectionHead page n="01" label={pacchetti.eyebrow} title={pacchetti.title} meta={pacchetti.meta} />
 
-          <div className="cycle" role="tablist" aria-label="Periodo di fatturazione">
-            {cycles.map((c) => (
-              <button key={c.id} role="tab" aria-selected={cycleId === c.id} className={`cy ${cycleId === c.id ? 'on' : ''}`} onClick={() => setCycleId(c.id)}>
-                {c.label}{c.badge && <em className="bd">{c.badge}</em>}
-              </button>
-            ))}
+          <div className="perks">
+            {pacchetti.perks.map((t, i) => <span key={i} className={`perk ${i === 0 ? 'perk-red' : ''}`}>{i === 0 && '★ '}{t}</span>)}
           </div>
 
           <div className="packs">
             {packs.map((p) => {
-              const total = p.monthly * cycle.months * (1 - cycle.discount);
-              const eff = total / cycle.months;
               return (
                 <article key={p.id} className={`pack ${p.featured ? 'feat' : ''}`}>
                   <div className="tier">{p.tier}</div>
                   <h2 className={`pname ${p.gold ? 'gold' : ''}`}>{p.name[0]}<em>{p.name[1]}</em></h2>
                   <p className="pack-desc">{p.desc}</p>
-                  <div className="pack-price">
-                    <span className="c">€</span><span className="a">{fmtPrice(eff)}</span><span className="p">/ mese</span>
-                    {cycle.discount > 0 && <s>€{p.monthly}</s>}
-                  </div>
-                  <div className="pack-tot">
-                    {cycle.months > 1
-                      ? <><span>Totale {cycle.label.toLowerCase()}</span><b>€{fmtPrice(total)}</b></>
-                      : <span>Fatturazione mensile</span>}
-                  </div>
+                  <div className="rates-label">Tariffe</div>
+                  <ul className="rates">
+                    {rates.map((c) => (
+                      <li key={c.id}>
+                        <span className="rl">{c.label}{c.badge && <em className="bd">{c.badge}</em>}</span>
+                        <b className="rp">€{fmtPrice(p.prices[c.id])}</b>
+                        <span className="rm">€{fmtPrice(p.prices[c.id] / c.months)}/mese</span>
+                      </li>
+                    ))}
+                  </ul>
                   <ul className="feats">
                     {p.features.map((f, i) => (
                       <li key={i} className={f.s ? '' : 'off'}>
@@ -45,7 +43,7 @@ const PagePacchetti = ({ openContact }) => {
                       </li>
                     ))}
                   </ul>
-                  <button className={`btn ${p.featured ? 'btn-red' : 'btn-line'}`} onClick={() => openContact(p.id, cycleId)}>
+                  <button className={`btn ${p.featured ? 'btn-red' : 'btn-line'}`} onClick={() => openContact(p.id)}>
                     Scegli {p.fullName} <span className="ar">→</span>
                   </button>
                 </article>
@@ -74,8 +72,8 @@ const PagePacchetti = ({ openContact }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {compare.rows.map((row, i) => (
-                    <tr key={i} className={i >= compare.rows.length - 2 ? 'pr' : ''}>
+                  {[...compare.rows, ...priceRows].map((row, i) => (
+                    <tr key={i} className={i >= compare.rows.length ? 'pr' : ''}>
                       {row.map((cell, j) => {
                         const cls = [j > 0 && packs[j - 1].featured ? 'f' : '', j > 0 && cell === '✓' ? 'y' : '', j > 0 && cell === '—' ? 'x' : ''].join(' ').trim();
                         return <td key={j} className={cls}>{cell}</td>;

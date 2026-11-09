@@ -17,10 +17,10 @@
 .nav.over .burger{border-color:rgba(255,255,255,.35);color:#fff}
 
 /* Hero */
-.hx{position:relative;display:flex;align-items:flex-end;min-height:min(100svh,940px);margin-top:calc(-1 * var(--nav-h));overflow:hidden;background:#0a2526}
+.hx{--hx-tail:48px;position:relative;display:flex;align-items:flex-end;min-height:calc(100vh + var(--hx-tail));min-height:calc(100svh + var(--hx-tail));margin-top:calc(-1 * var(--nav-h));overflow:hidden;background:#0a2526}
 .hx-bg{position:absolute;inset:0 0 0 30%}
 .hx-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0a2526 0 30%,rgba(10,37,38,.55) 46%,rgba(10,37,38,0) 66%),linear-gradient(0deg,rgba(10,37,38,.75) 0%,rgba(10,37,38,0) 38%)}
-.hx-in{position:relative;width:100%;padding-top:calc(var(--nav-h) + clamp(40px,7vh,104px));padding-bottom:clamp(36px,5vh,64px);pointer-events:none}
+.hx-in{position:relative;width:100%;padding-top:calc(var(--nav-h) + clamp(40px,7vh,104px));padding-bottom:calc(clamp(36px,5vh,64px) + var(--hx-tail));pointer-events:none}
 .hx-copy{display:flex;flex-direction:column;align-items:flex-start;gap:28px;max-width:640px;pointer-events:auto}
 .hx .h1{font-size:clamp(56px,7vw,112px)}
 .hx .lead{max-width:520px}
@@ -74,7 +74,7 @@
 .fb-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(10,37,38,.9) 0%,rgba(10,37,38,.5) 48%,rgba(10,37,38,.72) 100%),linear-gradient(0deg,rgba(10,37,38,.6),rgba(10,37,38,0) 50%)}
 .fb-in{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:40px 64px;width:100%;padding:clamp(28px,5vw,72px);pointer-events:none}
 .fb-copy{display:flex;flex-direction:column;align-items:flex-start;gap:24px;max-width:620px;pointer-events:auto}
-.fb-copy p{max-width:460px;font-size:clamp(17px,1.35vw,19px);line-height:1.6;color:var(--dim)}
+.fb-copy p{max-width:600px;font-size:clamp(17px,1.35vw,19px);line-height:1.6;color:var(--dim)}
 .fb-list{display:flex;flex-direction:column;gap:24px;margin:0;padding:0;list-style:none}
 .fb-list li{position:relative;display:flex;flex-direction:column;gap:8px;padding-bottom:16px}
 .fb-list li::after{content:"";position:absolute;left:0;bottom:0;width:28px;height:2px;background:var(--red)}
@@ -83,7 +83,8 @@
 .fb-list .t{font:600 13px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
 
 /* Banda risultati · Alghero */
-.ab{position:relative;overflow:hidden;background:#0a2526}
+.ab{--ab-gap:clamp(48px,5vw,80px);position:relative;overflow:hidden;margin-bottom:var(--ab-gap);background:#0a2526}
+.tease-sec{padding-bottom:clamp(48px,5vw,80px)}   /* stessa distanza sopra e sotto la sezione Alghero */
 .ab-bg{position:absolute;inset:0}
 .ab-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(10,37,38,.85) 0%,rgba(10,37,38,.45) 100%)}
 .ab-in{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:32px 64px;padding-top:clamp(96px,12vw,180px);padding-bottom:clamp(40px,5vw,64px);pointer-events:none}
@@ -109,7 +110,7 @@
 .ab-cap{align-items:flex-start;text-align:left}
 }
 @media (max-width:720px){
-.hx{min-height:100svh}
+.hx{min-height:calc(100svh + var(--hx-tail))}
 .hx-bg{left:0}
 .hx-shade{background:linear-gradient(0deg,#0a2526 0%,rgba(10,37,38,.88) 45%,rgba(10,37,38,.25) 80%,rgba(10,37,38,.4) 100%)}
 .hx .h1{font-size:clamp(52px,15vw,80px)}
