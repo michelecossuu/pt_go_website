@@ -1,0 +1,53 @@
+/* La Scia: il doppio arco del logo (rosso + teal) diventa la strada che attraversa le pagine */
+:root{--scia-w:5px}
+.rule{height:var(--scia-w,4px);border-radius:99px;background:linear-gradient(90deg,#d9192f 0 45%,#18a593 45% 100%)}
+.dk .rule{background:linear-gradient(90deg,#ff4d61 0 45%,#5ed5c5 45% 100%)}
+.cta .rule{background:linear-gradient(90deg,#fff 0 45%,rgba(255,255,255,.6) 45% 100%)}
+.scia{position:absolute;top:0;left:0;z-index:30;overflow:hidden;pointer-events:none;contain:layout paint}
+.scia svg{display:block}
+.scia path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.scia .r,.scia .t{stroke-dasharray:0 1000000}
+.scia .g{stroke-width:1.5;stroke-dasharray:1 9}
+.ink-b .r{stroke:#d9192f}.ink-b .t{stroke:#18a593}.ink-b .g{stroke:rgba(16,41,42,.32)}
+.ink-d .r{stroke:#ff4d61}.ink-d .t{stroke:#5ed5c5}.ink-d .g{stroke:rgba(255,255,255,.34)}
+.ink-l .r{stroke:#fff}.ink-l .t{stroke:rgba(255,255,255,.6)}.ink-l .g{stroke:rgba(255,255,255,.45)}
+.scia .nd{fill:#f1eee8;stroke:rgba(16,41,42,.38);stroke-width:1.5;transition:fill .35s,stroke .35s}
+.scia .nd.ink-d{fill:#0f3a3a;stroke:rgba(255,255,255,.45)}
+.scia .nd[data-on]{fill:#d9192f;stroke:#d9192f}
+.scia .nd.ink-d[data-on]{fill:#ff4d61;stroke:#ff4d61}
+.scia .hd{transition:opacity .3s}
+.scia .ah{fill:#d9192f;stroke:#d9192f;stroke-width:2;stroke-linejoin:round}
+.scia .sp{opacity:0;transition:opacity .18s}
+.scia .hd[data-f="0"] .sp0,.scia .hd[data-f="1"] .sp1,.scia .hd[data-f="2"] .sp2{opacity:1}
+.scia .sp circle{fill:#d9192f}.scia .sp .tl{fill:#18a593}
+.scia .hd[data-ink="d"] .ah{fill:#ff4d61;stroke:#ff4d61}.scia .hd[data-ink="d"] .sp circle{fill:#ff4d61}.scia .hd[data-ink="d"] .sp .tl{fill:#5ed5c5}
+.scia .hd[data-ink="l"] .ah{fill:#fff;stroke:#fff}.scia .hd[data-ink="l"] .sp circle{fill:#fff}.scia .hd[data-ink="l"] .sp .tl{fill:rgba(255,255,255,.7)}
+.scia .dp{transform:scale(0);transform-box:fill-box;transform-origin:center;transition:transform .4s cubic-bezier(.3,1.7,.5,1)}
+.scia .dp.spl{transform-origin:right center;transition-duration:.6s}
+.scia .dp[data-on]{transform:scale(1)}
+.dp.ink-b{fill:#d9192f}.dp.ink-d{fill:#ff4d61}.dp.ink-l{fill:#fff}
+.dp.tl.ink-b{fill:#18a593}.dp.tl.ink-d{fill:#5ed5c5}.dp.tl.ink-l{fill:rgba(255,255,255,.7)}
+@media (prefers-reduced-motion:reduce){.scia .dp{transition:none}}
+
+/* Reazioni dei componenti al passaggio della freccia (solo in modalità "attraverso") */
+html.scia-on .hx-pill .ic{transition:border-color .4s,background .4s,color .4s}
+.hx-pill[data-scia-on] .ic{border-color:#ff4d61;background:rgba(255,77,97,.18);color:#fff}
+html.scia-on .ph-list .n{transition:color .45s}
+html.scia-on .ph-list li:not([data-scia-on]) .n{color:rgba(16,41,42,.2)}
+html.scia-on .tx-res{transition:color .45s}
+html.scia-on .tx-card:not([data-scia-on]) .tx-res{color:var(--dim)}
+html.scia-on .tx-ph+.tx-ph .tx-tag{transition:background .35s}
+html.scia-on .tx-card:not([data-scia-on]) .tx-ph+.tx-ph .tx-tag{background:rgba(10,37,38,.82)}
+.tx-card[data-scia-on] .tx-ph+.tx-ph .tx-tag{animation:sciaPop .55s cubic-bezier(.3,1.6,.5,1)}
+html.scia-on .step .num{transition:color .45s}
+html.scia-on .step:not([data-scia-on]) .num{color:rgba(16,41,42,.14)}
+html.scia-on .fb-list li::after{transition:width .7s cubic-bezier(.2,.7,.2,1)}
+.fb-list li[data-scia-on]::after{width:100%}
+html.scia-on .fb-list .n{transition:opacity .45s}
+html.scia-on .fb-list li:not([data-scia-on]) .n{opacity:.35}
+.tease-item[data-scia-on] .tease-price .ar{transform:translateX(4px);color:var(--red)}
+.tease-item.feat[data-scia-on] .tease-price .ar{color:#ff7385}
+.cta .btn[data-scia-on]{animation:sciaRing 1.8s ease-out 3}
+@keyframes sciaPop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes sciaRing{0%{box-shadow:0 0 0 0 rgba(255,255,255,.75)}100%{box-shadow:0 0 0 20px rgba(255,255,255,0)}}
+@media (prefers-reduced-motion:reduce){.tx-card[data-scia-on] .tx-ph+.tx-ph .tx-tag,.cta .btn[data-scia-on]{animation:none}}

@@ -1,5 +1,8 @@
 // ─── Contenuto centralizzato del sito ───────────────────────────────────────
 // Modificare qui per aggiornare testi, prezzi e dati in tutta l'app.
+// Foto stock provvisorie (Pexels)
+const px = (id, w = 1400) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
+
 globalThis.window.CONTENT = {
 
   // ── Identità del brand ────────────────────────────────────────────────────
@@ -22,6 +25,8 @@ globalThis.window.CONTENT = {
     emailHref:    'mailto:giuliano@ortupt.it',
     instagram:    '@giuliano.ortu.pt',
     instagramUrl: 'https://instagram.com/',
+    whatsappUrl:  'https://wa.me/393331234567',
+    mapsUrl:      'https://maps.google.com/?q=Via+Di+Triuggio+20+Triuggio',
     address:      'Via Di Triuggio 20',
     city:         'Triuggio (MB)',
     postalCode:   '09131',
@@ -41,38 +46,64 @@ globalThis.window.CONTENT = {
   ],
 
   // ── Home ──────────────────────────────────────────────────────────────────
+  // Le foto sono provvisorie (stock Pexels): sostituire `src` con le foto vere.
+  // `alt` descrive la foto definitiva da scattare.
   home: {
     hero: {
       eyebrow:    'Personal Trainer · Monza & Brianza',
-      headline:   ['Ascolto,', 'metodo,', 'evoluzione.'],
+      headline:   ['Ascolto,', 'metodo,', 'evoluzione.'],   // l'ultima riga va in corsivo
       sub:        'Allenamento su misura per chi vuole risultati reali, senza scorciatoie. Tu, i tuoi obiettivi, un metodo costruito intorno alla tua quotidianità.',
-      ctaPrimary: 'Scopri i Pacchetti',
+      ctaPrimary: 'Scopri i pacchetti',
       ctaGhost:   'Prenota una consulenza',
-      liveTag:    'Live · Coaching',
-      vital: [
-        { label: 'Sessione',  value: '60',  unit: 'min' },
-        { label: 'BPM Medio', value: '142', unit: null  },
-        { label: 'Kcal',      value: '680', unit: null  },
+      photo:      { src: px(5327466, 2200), alt: 'Giuliano in palestra · orizzontale, soggetto sulla destra' },
+      pillars: [
+        { icon: 'Barbell', lines: ['Allenamento', 'su misura'] },
+        { icon: 'Leaf',    lines: ['Coaching', 'nutrizionale'] },
+        { icon: 'Chat',    lines: ['Supporto', 'continuo'] },
       ],
     },
-    stats: [
-      { value: '12',  unit: '+', label: 'Anni di esperienza' },
-      { value: '340', unit: '+', label: 'Clienti seguiti'    },
-      { value: '98',  unit: '%', label: 'Obiettivi raggiunti' },
-    ],
-    marquee: [
-      'Forza funzionale', 'Ipertrofia', 'Dimagrimento', 'Postura',
-      'Atletica', 'Recupero', 'Body recomp', 'Preparazione gare',
-    ],
+    philosophy: {
+      eyebrow: 'La mia filosofia',
+      title:   'Ascolto prima,<br/>programmo <em>dopo</em>.',
+      text:    'Ogni corpo racconta una storia diversa. Il mio lavoro è leggerla bene prima di scrivere un piano che funzioni nella tua vita reale, non solo sulla carta.',
+      photo:   { src: px(7203532), alt: 'Ritratto sorridente di Giuliano · verticale' },
+      principles: [
+        { title: 'La persona prima del programma', desc: 'Obiettivi, tempi e storia fisica guidano ogni scelta.' },
+        { title: 'Progressi, non perfezione',      desc: 'Piccoli passi costanti valgono più di sforzi eroici e brevi.' },
+        { title: 'Niente scorciatoie',             desc: 'Tecnica, recupero e alimentazione sostenibile: risultati che restano.' },
+      ],
+      cta:       'Chi sono',
+      signature: '— Giuliano',
+    },
+    transformations: {
+      eyebrow: 'Trasformazioni',
+      title:   'Persone vere,<br/>risultati <em>veri</em>.',
+      note:    'Foto pubblicate con il consenso dei clienti.',
+      items: [
+        { name: 'Marta R.',  result: '−11 kg · 6 mesi',         before: px(4162544, 700), after: px(3837423, 700)  },
+        { name: 'Luca P.',   result: '+5 kg magri · 8 mesi',    before: px(5496591, 700), after: px(9073246, 700)  },
+        { name: 'Sara M.',   result: '−7 kg · 4 mesi',          before: px(6455942, 700), after: px(12314077, 700) },
+        { name: 'Davide C.', result: 'Ricomposizione · 1 anno', before: px(3838706, 700), after: px(3926644, 700)  },
+      ],
+    },
     method: {
       eyebrow: 'Il metodo',
-      title:   'Un approccio <em>completo</em>,<br/>non un programma standard.',
+      title:   'Un approccio <em>completo</em>, non un programma standard.',
       meta:    'Ogni piano nasce da una valutazione fisica e da una conversazione onesta. Niente copia-incolla, niente promesse vuote.',
-      cards: [
-        { icon: 'Activity', title: 'Valutazione iniziale',     desc: 'Test funzionali, analisi posturale e composizione corporea. Si parte dai dati, non dalle sensazioni.' },
-        { icon: 'Dumbbell', title: 'Programmazione su misura', desc: 'Schede progressive che si adattano al tuo ritmo settimanale, alla tua condizione e ai tuoi obiettivi.' },
-        { icon: 'Heart',    title: 'Supporto continuo',        desc: "WhatsApp diretto, revisioni mensili e monitoraggio costante. Non sei solo tra una sessione e l'altra." },
+      photo:   { src: px(31618281), alt: 'Giuliano durante un esercizio · es. curl con manubrio, verticale' },
+      chip:    { title: 'Consulenza gratuita', sub: 'Il primo passo, senza impegno' },
+      steps: [
+        { title: 'Valutazione iniziale',     desc: 'Test funzionali, analisi posturale e composizione corporea. Si parte dai dati, non dalle sensazioni.' },
+        { title: 'Programmazione su misura', desc: 'Schede progressive che si adattano al tuo ritmo settimanale, alla tua condizione e ai tuoi obiettivi.' },
+        { title: 'Supporto continuo',        desc: "WhatsApp diretto, revisioni mensili e monitoraggio costante. Non sei solo tra una sessione e l'altra." },
       ],
+    },
+    effort: {
+      eyebrow: 'La fatica buona',
+      title:   'Quella che ti lascia<br/><em>più forte</em> di prima.',
+      text:    "L'ultima ripetizione è quella che conta. Ti porto al limite giusto, con tecnica e recupero, mai oltre.",
+      photo:   { src: px(3838705, 2000), alt: 'Momento di fatica a fine serie · orizzontale, luce scura' },
+      values:  ['Disciplina', 'Costanza', 'Risultati'],
     },
     packTeaser: {
       eyebrow: 'Pacchetti',
@@ -80,13 +111,17 @@ globalThis.window.CONTENT = {
       meta:    'Dalla scheda mensile al coaching completo. Scegli la profondità del supporto in base al tuo momento.',
       cta:     'Confronta tutti i pacchetti',
     },
-    testimonial: {
-      quote:  "Sei mesi con Giuliano e ho perso 11 kg, ma soprattutto ho recuperato il mal di schiena che mi tormentava da anni. Non è solo un trainer: è una persona che ti ascolta davvero.",
-      author: 'Marta R.',
-      role:   'Cliente dal 2024',
+    roots: {
+      caption: ['Piccoli passi,', 'grandi risultati.'],
+      photo:   { src: 'assets/capocaccia.jpg', alt: 'Capo Caccia e l\'isola Foradada, Alghero' },
+      stats: [
+        { value: '12',  unit: '+', label: 'Anni di esperienza'  },
+        { value: '340', unit: '+', label: 'Clienti seguiti'     },
+        { value: '98',  unit: '%', label: 'Obiettivi raggiunti' },
+      ],
     },
     cta: {
-      title:  'Pronto a iniziare<br/>il <em>tuo</em> percorso?',
+      title:  'Piuttosto che immaginare,<br/><em>prova.</em>',   // l'<em> serve: la freccia lo sottolinea
       button: 'Prenota una consulenza gratuita',
     },
   },
@@ -141,6 +176,7 @@ globalThis.window.CONTENT = {
       teaserDesc: 'Piano alimentare completo e 1:1 mensile di revisione.',
       desc:       "L'esperienza completa: piano alimentare, revisione 1:1 e priorità totale.",
       monthly:    120,
+      gold:       true,
       features: [
         { t: 'Tutto del piano Transformation',              s: true,  bold: true },
         { t: 'Supporto WhatsApp prioritario',               s: true  },
@@ -231,21 +267,22 @@ globalThis.window.CONTENT = {
       meta:    'Personal Trainer certificato, formato in anatomia e fisiologia e specializzato in ricomposizione corporea e riabilitazione funzionale.',
     },
     badge: 'Disponibile · Monza & Brianza',
+    photo: { src: null, alt: 'Ritratto di Giuliano · verticale 4:5' },
     bio: [
       'Ho sempre fatto sport, e mi ha insegnato i valori della disciplina, del controllo e della crescita personale. Per questo motivo, ho deciso di mettermi in gioco come personal trainer per trasmettere agli altri ciò che per me è fondamentale nella vita — la passione, la dedizione e la trasformazione consapevole.',
-      'Il mio metodo è semplice: <strong style="color:var(--text)">ascolto prima, programmo dopo</strong>. Ogni corpo racconta una storia diversa, e il mio lavoro è leggerla bene prima di scrivere un piano che funzioni davvero. Credo nei numeri, nelle progressioni misurate e nella costanza — quella vera, non quella delle foto motivazionali.',
+      'Il mio metodo è semplice: <strong>ascolto prima, programmo dopo</strong>. Ogni corpo racconta una storia diversa, e il mio lavoro è leggerla bene prima di scrivere un piano che funzioni davvero. Credo nei numeri, nelle progressioni misurate e nella costanza — quella vera, non quella delle foto motivazionali.',
     ],
     signature: '— Giuliano',
     certifications: {
       eyebrow: 'Formazione',
       title:   'Certificazioni e <em>diplomi</em>.',
       items: [
-        { icon: 'Cap',   year: '2014 · Laurea Magistrale', title: 'Scienze e Tecniche dello Sport',                   org: 'Università degli Studi di Alghero · 110 / 110 con lode' },
-        { icon: 'Award', year: '2015',                     title: 'NSCA Certified Strength & Conditioning Specialist', org: 'National Strength and Conditioning Association · USA'    },
-        { icon: 'Award', year: '2017',                     title: 'FIPE — Istruttore di Powerlifting Livello 2',       org: 'Federazione Italiana Pesistica e Cultura Fisica'          },
-        { icon: 'Award', year: '2019',                     title: 'Functional Movement Screen — Livello 2',            org: 'FMS Functional Movement Systems'                         },
-        { icon: 'Cap',   year: '2021 · Master',            title: 'Nutrizione Applicata allo Sport',                  org: 'Scuola Italiana di Medicina dello Sport · Milano'         },
-        { icon: 'Award', year: '2023',                     title: 'Postural Rehab Specialist',                        org: 'ATS — Academy of Therapeutic Sports'                     },
+        { type: 'Laurea Magistrale', year: '2014', title: 'Scienze e Tecniche dello Sport',                   org: 'Università degli Studi di Alghero · 110 / 110 con lode' },
+        { type: null,                year: '2015', title: 'NSCA Certified Strength & Conditioning Specialist', org: 'National Strength and Conditioning Association · USA'    },
+        { type: null,                year: '2017', title: 'FIPE — Istruttore di Powerlifting Livello 2',       org: 'Federazione Italiana Pesistica e Cultura Fisica'          },
+        { type: null,                year: '2019', title: 'Functional Movement Screen — Livello 2',            org: 'FMS Functional Movement Systems'                         },
+        { type: 'Master',            year: '2021', title: 'Nutrizione Applicata allo Sport',                  org: 'Scuola Italiana di Medicina dello Sport · Milano'         },
+        { type: null,                year: '2023', title: 'Postural Rehab Specialist',                        org: 'ATS — Academy of Therapeutic Sports'                     },
       ],
     },
     specializations: {

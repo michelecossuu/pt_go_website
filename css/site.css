@@ -1,0 +1,31 @@
+/* Aggiunte locali sopra il design v6 (caricato per ultimo). */
+
+/* Foto a riempimento del contenitore (sostituisce <image-slot> del riferimento) */
+img.ph{object-fit:cover}
+div.ph.ph-empty{display:grid;place-items:center;padding:24px;background:var(--mint);color:var(--dim);font:500 13px/1.5 var(--sans);text-align:center}
+.dk .ph-empty{background:#164847}
+.ph-empty span{max-width:240px}
+
+/* Select personalizzata (form contatti) */
+.csel{position:relative}
+.csel-trigger{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:15px 16px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--text);font:400 15px/1.4 var(--sans);text-align:left;cursor:pointer;transition:border-color .2s}
+.csel-trigger svg{flex-shrink:0;color:var(--dim);transition:transform .2s}
+.csel-trigger.open{border-color:var(--teal-2)}
+.csel-trigger.open svg{transform:rotate(180deg)}
+.csel-trigger .ph-txt{color:#859392}
+.csel-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:20;max-height:280px;overflow-y:auto;margin:0;padding:6px;list-style:none;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:0 18px 40px -18px rgba(15,46,46,.35)}
+.csel-opt{padding:11px 12px;border-radius:8px;font-size:15px;cursor:pointer;transition:background .15s}
+.csel-opt:hover{background:var(--bg)}
+.csel-opt.on{background:var(--mint);color:var(--teal-2);font-weight:600}
+
+/* Banda "Le mie radici": foto riconoscibile ma in secondo piano (desaturata, scura) */
+.ab-bg img.ph{object-position:50% 34%;filter:saturate(.4) brightness(.66) contrast(.92)}
+.ab-shade{background:linear-gradient(0deg,rgba(10,37,38,.9) 0%,rgba(10,37,38,.62) 55%,rgba(10,37,38,.55) 100%)}
+.ab-in{padding-top:clamp(64px,7vw,104px)}
+.ab-cap .it{font:400 clamp(30px,2.9vw,46px)/1.15 "Indie Flower",var(--it);font-style:normal;transform:rotate(-4deg);transform-origin:right center}
+/* Indie Flower ha un solo peso: assottiglio il tratto con un contorno scuro sopra il riempimento */
+.ab-cap .it{-webkit-text-stroke:1.1px #12302f;paint-order:stroke fill}
+@media (min-width:961px){.ab-cap{align-self:start;margin-top:-36px}}
+
+/* Hero: su desktop 100svh può risultare qualche px più basso della finestra (Safari) e lascia una striscia chiara sotto */
+@media (min-width:721px){.hx{min-height:min(max(100vh,100svh),940px)}}
