@@ -9,7 +9,7 @@ globalThis.window.CONTENT = {
     fullName:    'Giuliano Ortu',
     title:       'Personal Trainer',
     location:    'Monza & Brianza',
-    tagline:     'Disciplina, evoluzione, risultati.',
+    tagline:     'Ascolto, metodo, evoluzione.',
     taglineSub:  'Allenamento su misura, a Monza & Brianza.',
     vatId:       'P.IVA 00011112222',
   },
@@ -44,7 +44,7 @@ globalThis.window.CONTENT = {
   home: {
     hero: {
       eyebrow:    'Personal Trainer · Monza & Brianza',
-      headline:   ['Disciplina,', 'evoluzione,', 'risultati.'],
+      headline:   ['Ascolto,', 'metodo,', 'evoluzione.'],
       sub:        'Allenamento su misura per chi vuole risultati reali, senza scorciatoie. Tu, i tuoi obiettivi, un metodo costruito intorno alla tua quotidianità.',
       ctaPrimary: 'Scopri i Pacchetti',
       ctaGhost:   'Prenota una consulenza',
@@ -96,8 +96,8 @@ globalThis.window.CONTENT = {
     {
       id:         'kick',
       tier:       '01 · Entry',
-      fullName:   'Kick Starter',
-      name:       ['Kick', 'Starter'],
+      fullName:   'Core',
+      name:       ['Co', 're'],
       teaserDesc: 'Schede ogni 6-8 settimane, check-in bi-settimanali.',
       desc:       'Per chi inizia: una base solida con autonomia e metodo.',
       monthly:    50,
@@ -136,8 +136,8 @@ globalThis.window.CONTENT = {
     {
       id:         'elite',
       tier:       '03 · Premium',
-      fullName:   'Elite',
-      name:       ['El', 'ite'],
+      fullName:   'Revolution',
+      name:       ['Revol', 'ution'],
       teaserDesc: 'Piano alimentare completo e 1:1 mensile di revisione.',
       desc:       "L'esperienza completa: piano alimentare, revisione 1:1 e priorità totale.",
       monthly:    120,

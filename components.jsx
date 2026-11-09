@@ -27,7 +27,7 @@ const Icons = {
 // Brand wordmark
 const Brand = ({ onClick }) => (
   <div className="nav-brand" onClick={onClick} role="button" tabIndex={0}>
-    <Icons.Logo size={42} />
+    <img src="assets/logo_GO.png" alt="GO Logo" className="mark" />
     <div className="wm">
       Giuliano<em>&nbsp;Ortu</em>
       <small>Personal Trainer</small>
