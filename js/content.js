@@ -261,30 +261,26 @@ globalThis.window.CONTENT = {
     intro: {
       eyebrow: 'Chi sono',
       title:   "Una vita dedicata allo sport,<br/> alla nutrizione e alle <em>persone</em>.",
-      meta:    'Personal Trainer certificato, formato in anatomia e fisiologia e specializzato in ricomposizione corporea e riabilitazione funzionale.',
+      meta:    'Personal Trainer Invictus Academy, laureato in Farmacia, con un approccio che unisce allenamento e nutrizione.',
     },
     badge: 'Disponibile',
     photo: { src: null, alt: 'Ritratto di Giuliano · verticale 4:5' },
     bio: [
-      'Ho sempre fatto sport, e mi ha insegnato i valori della disciplina, del controllo e della crescita personale. Per questo motivo, ho deciso di mettermi in gioco come personal trainer per trasmettere agli altri ciò che per me è fondamentale nella vita — la passione, la dedizione e la trasformazione consapevole.',
-      'Il mio metodo è semplice: <strong>ascolto prima, programmo dopo</strong>. Ogni corpo racconta una storia diversa, e il mio lavoro è leggerla bene prima di scrivere un piano che funzioni davvero. Credo nei numeri, nelle progressioni misurate e nella costanza — quella vera, non quella delle foto motivazionali.',
+      'Ho sempre fatto sport, e mi ha insegnato i valori della disciplina, del controllo e della crescita personale. Per questo motivo, ho deciso di mettermi in gioco come Personal Trainer per trasmettere agli altri ciò che per me è fondamentale nella vita: la <strong>passione</strong>, la <strong>dedizione</strong> e la <strong>trasformazione consapevole</strong>.',
+      'Il mio metodo è semplice: <strong>ascolto prima, programmo dopo</strong>. Ogni corpo racconta una storia diversa, e il mio lavoro è conoscerla e comprenderla per scrivere un piano che funzioni davvero. Credo nei numeri, nelle progressioni misurate e nella <strong>costanza</strong> — quella vera, non quella delle foto motivazionali.',
     ],
     signature: '— Giuliano',
     certifications: {
       eyebrow: 'Formazione',
       title:   'Certificazioni e <em>diplomi</em>.',
       items: [
-        { type: 'Laurea Magistrale', year: '2014', title: 'Scienze e Tecniche dello Sport',                   org: 'Università degli Studi di Alghero · 110 / 110 con lode' },
-        { type: null,                year: '2015', title: 'NSCA Certified Strength & Conditioning Specialist', org: 'National Strength and Conditioning Association · USA'    },
-        { type: null,                year: '2017', title: 'FIPE — Istruttore di Powerlifting Livello 2',       org: 'Federazione Italiana Pesistica e Cultura Fisica'          },
-        { type: null,                year: '2019', title: 'Functional Movement Screen — Livello 2',            org: 'FMS Functional Movement Systems'                         },
-        { type: 'Master',            year: '2021', title: 'Nutrizione Applicata allo Sport',                  org: 'Scuola Italiana di Medicina dello Sport · Milano'         },
-        { type: null,                year: '2023', title: 'Postural Rehab Specialist',                        org: 'ATS — Academy of Therapeutic Sports'                     },
+        { type: 'Qualifica', year: '2026', title: 'Personal Trainer — 3° Livello', org: 'Invictus Academy · conseguita il 6 giugno 2026' },
+        { type: 'Laurea',    year: '2020', title: 'Farmacia',                      org: 'Università degli studi di Sassari'                                     },
       ],
     },
     specializations: {
-      eyebrow: 'Specializzazioni',
-      title:   'Dove sono <em>più forte</em>.',
+      eyebrow: 'Su cosa lavoriamo',
+      title:   'Gli obiettivi che <em>seguo</em>.',
       items: [
         { n: '01', title: 'Body recomposition', desc: 'Costruire massa e perdere grasso allo stesso tempo, in modo sostenibile.'                        },
         { n: '02', title: 'Forza & powerlifting', desc: 'Programmazione per atleti natural e gare federali FIPE/IPF.'                                  },
@@ -293,13 +289,13 @@ globalThis.window.CONTENT = {
       ],
     },
     timeline: {
-      eyebrow: 'Percorso',
-      title:   'Dove ho <em>allenato</em>.',
+      eyebrow: 'Coaching online',
+      title:   'Tu scegli la palestra,<br/><em>io ti seguo</em>.',
       items: [
-        { years: '2014 — 2016', place: 'Body & Soul Fitness Center',    desc: 'Trainer di sala e responsabile dei corsi di forza. Primo contatto con la programmazione per atleti agonisti.'                           },
-        { years: '2016 — 2020', place: 'Sardinia Strength Lab',         desc: 'Co-fondatore di uno spazio dedicato a forza e powerlifting. Preparazione di sei atleti per gare nazionali FIPE.'                        },
-        { years: '2020 — 2023', place: 'Coach online — Stagione pandemia', desc: 'Costruito un programma di coaching da remoto per 80+ clienti in tutta Italia. Sviluppo del metodo personale.'                       },
-        { years: '2023 — Oggi', place: 'Studio Privato', desc: 'Spazio personale dedicato 1-to-1, con valutazione funzionale, area pesi e nutrizione integrata.'                                    },
+        { years: '01', place: 'Ci conosciamo',         desc: 'Una consulenza per capire obiettivi, storia sportiva, orari e attrezzatura che hai a disposizione.'  },
+        { years: '02', place: 'Scrivo il tuo programma', desc: 'Costruito sulla tua palestra, casa o x ogni tipo di viaggio: lavoriamo con quello che hai, non con quello che manca.' },
+        { years: '03', place: 'Ti alleni dove vuoi',   desc: 'Ogni esercizio con video e spiegazione. Nessuno spostamento, nessun orario da incastrare con il mio.'  },
+        { years: '04', place: 'Controlliamo e adattiamo', desc: 'Check periodici e supporto su WhatsApp: guardiamo i numeri e aggiustiamo il piano quando serve.'    },
       ],
     },
     cta: {

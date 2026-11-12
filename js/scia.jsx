@@ -242,15 +242,54 @@ function sciaGutter(page, c) {
   return true;
 }
 
+// Modalità "steps": solo la linea del tempo (.tl), dal primo all'ultimo passaggio. Su una fila corre sulla linea e attraversa i pallini; su più file scende nel margine sinistro.
+function sciaSteps(page, c) {
+  const tl = page.querySelector('.tl'), items = tl ? [...tl.querySelectorAll('.tl-i')] : [];
+  if (items.length < 2) return false;
+  const { X, add, at } = c, R = sciaRect;
+  const dots = items.map((el) => {
+    const r = R(el), b = getComputedStyle(el, '::before'), w = sciaPf(b.width) || 11, h = sciaPf(b.height) || 11;
+    const l = r.l + sciaPf(b.left), t = r.t + sciaPf(b.top);
+    return { el, l, t, w, h, x: l + w / 2, y: t + h / 2 };
+  });
+  dots.forEach((d) => c.holes.push({ l: d.l - 7, t: d.t - 7, w: d.w + 14, h: d.h + 14, rad: (d.w + 14) / 2 }));
+  const one = dots.every((d) => Math.abs(d.y - dots[0].y) < 4);
+  const first = dots[0], last = dots[dots.length - 1];
+  if (one) {
+    const gap = dots[1].x - first.x;
+    add(Math.max(X[0], first.x - 40), first.y, 'r');
+    dots.forEach((d) => at(d.el, d.x, d.y));
+    add(Math.min(X[1] - 8, last.x + Math.max(48, gap * 0.35)), last.y, 'r');
+  } else {
+    // timeline verticale (pallini in colonna): scorre sui pallini; altrimenti nel margine sinistro
+    const col = dots.every((d) => Math.abs(d.x - first.x) < 4), x = col ? first.x : Math.max(X[0], first.x - 28);
+    add(x, first.y - 24, 'd');
+    dots.forEach((d) => at(d.el, x, d.y));
+    add(x, last.y + Math.max(48, (last.y - first.y) / (dots.length - 1) * 0.35), 'd');
+  }
+  return true;
+}
+
 function sciaGeometry(page, mode) {
   let c = sciaCtx(page);
-  let ok = mode === 'through' && sciaHome(page, c);
-  if (!ok) { c = sciaCtx(page); ok = sciaGutter(page, c); }
+  let ok = mode === 'through' ? sciaHome(page, c) : mode === 'steps' ? sciaSteps(page, c) : false;
+  if (!ok && mode !== 'steps') { c = sciaCtx(page); ok = sciaGutter(page, c); }
   if (!ok || c.P.length < 2) return null;
+  // "steps" dentro una sezione sticky: coordinate relative al contenitore bloccato, avanzamento legato allo scroll della sezione
+  const pinEl = mode === 'steps' && page.querySelector('.tl') && page.querySelector('.tl').closest('.pin-in');
+  if (pinEl && sciaCs(pinEl).position === 'sticky') {
+    // inizio = quando la sezione si aggancia sotto la navbar; corsa = altezza di .pin-run (elementi non sticky: posizioni stabili)
+    const pr = sciaRect(pinEl), run = pinEl.parentElement.querySelector('.pin-run');
+    const rr = run ? sciaRect(run) : { t: pr.b, h: 0 }, top = rr.t - pr.h - sciaPf(sciaCs(pinEl).top);
+    const mv = (o) => { o.x -= pr.l; o.y -= pr.t; };
+    c.P.forEach(mv); c.st.forEach(mv); c.holes.forEach((h) => { h.l -= pr.l; h.t -= pr.t; });
+    c.st.forEach((x) => { x.ink = 'b'; });
+    return { d: sciaSmooth(sciaPath(c.P), 20), W: pr.w, H: pr.h, st: c.st, holes: c.holes, dk: [], lt: [], few: true, pin: { el: pinEl, ox: pr.l, oy: pr.t, top, range: Math.max(1, rr.h) } };
+  }
   const dk = [...page.querySelectorAll('.dk')].map(sciaRect);
   const lt = [...page.querySelectorAll('.cta')].map(sciaRect);
   c.st.forEach((x) => { x.ink = sciaIn(dk, x.x, x.y) ? 'd' : sciaIn(lt, x.x, x.y) ? 'l' : 'b'; });
-  return { d: sciaSmooth(sciaPath(c.P), c.W < 760 ? 6 : c.W < 1100 ? 12 : 20), W: c.W, H: sciaRect(page).b, st: c.st, holes: c.holes, dk, lt, tf: c.tf };
+  return { d: sciaSmooth(sciaPath(c.P), c.W < 760 ? 6 : c.W < 1100 ? 12 : 20), W: c.W, H: sciaRect(page).b, st: c.st, holes: c.holes, dk, lt, tf: c.tf, few: mode === 'steps' };
 }
 
 const sciaRng = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
@@ -291,7 +330,13 @@ function Scia({ pageKey, mode = 'through', ghost = false, stations = false, drop
     while (lo < hi) { const m = (lo + hi + 1) >> 1; if (env[m] <= y) lo = m; else hi = m - 1; }
     return Math.min(lo * step, L);
   };
-  const target = () => lenAt(window.scrollY + window.innerHeight * 0.66);
+  const target = () => {
+    const pn = s.geo && s.geo.pin;
+    if (!pn) return lenAt(window.scrollY + window.innerHeight * 0.66);
+    // la freccia parte appena la sezione si blocca e arriva in fondo poco prima che si sblocchi
+    const p = (window.scrollY - pn.top) / pn.range;
+    return s.L * Math.min(1, Math.max(0, (p - 0.03) / 0.85));
+  };
 
   const apply = () => {
     const { cur, L, step, xs, ys, n, geo: g } = s;
@@ -398,11 +443,13 @@ function Scia({ pageKey, mode = 'through', ghost = false, stations = false, drop
     Object.assign(s, { L, n, xs, ys, env, geo, st: geo.st, dpEls: null, dl: null, dk: 0 });
     const rnd = sciaRng(7), ww = s.w, list = [];
     const ang = (i) => { const a = Math.max(0, i - 2), b = Math.min(n, i + 2); return Math.atan2(ys[b] - ys[a], xs[b] - xs[a]); };
-    const ko = [...document.querySelectorAll('.page :is(h1,h2,h3,p,figcaption,.label,.btn,.tx-tag,.tease-price,.num,.ab-stat,.ab-cap,.hx-pill,.ph-list li,.fb-list li,.tier,.pname,.sig)')].map(sciaRect).map((r) => ({ l: r.l - 8, r: r.r + 8, t: r.t - 8, b: r.b + 8 }));
+    const ox = geo.pin ? geo.pin.ox : 0, oy = geo.pin ? geo.pin.oy : 0, few = geo.few;
+    const ko = [...document.querySelectorAll('.page :is(h1,h2,h3,p,figcaption,.label,.btn,.tx-tag,.tease-price,.num,.ab-stat,.ab-cap,.hx-pill,.ph-list li,.fb-list li,.tier,.pname,.sig,.yr)')].map(sciaRect).map((r) => ({ l: r.l - 8 - ox, r: r.r + 8 - ox, t: r.t - 8 - oy, b: r.b + 8 - oy }));
     const push = (x, y, len, r, rot, el) => { if (sciaIn(ko, x, y)) return; list.push({ x, y, len, r, rot, el, b: rot != null ? sciaBlob(r * 1.35, rnd) : null, teal: rnd() < 0.16, ink: sciaIn(geo.dk, x, y) ? 'd' : sciaIn(geo.lt, x, y) ? 'l' : 'b' }); };
-    for (let L0 = 70 + rnd() * 80; L0 < L - 40; L0 += 90 + rnd() * 150) {
+    // few: meno gocce (Esperienza), scie più rade e un solo schizzo per goccia
+    for (let L0 = 70 + rnd() * 80; L0 < L - 40; L0 += few ? 260 + rnd() * 220 : 90 + rnd() * 150) {
       const i = Math.round(L0 / step), a = ang(i), nx = -Math.sin(a), ny = Math.cos(a);
-      const k = 1 + Math.floor(rnd() * 3);
+      const k = few ? 1 : 1 + Math.floor(rnd() * 3);
       for (let j = 0; j < k; j++) {
         const sd = rnd() < 0.5 ? -1 : 1, dist = ww + 3 + rnd() * (ww * 2.4 + 6), back = rnd() * 14;
         const r = 0.9 + rnd() * (ww * 0.62 + 0.6);
@@ -411,7 +458,7 @@ function Scia({ pageKey, mode = 'through', ghost = false, stations = false, drop
     }
     geo.st.forEach((x) => {
       if (!x.el) return;
-      for (let j = 0; j < 4; j++) { const a = rnd() * Math.PI * 2, dist = 10 + rnd() * 16; push(x.x + Math.cos(a) * dist, x.y + Math.sin(a) * dist, x.len, 1 + rnd() * (ww * 0.5 + 0.8), a * 180 / Math.PI, true); }
+      for (let j = 0; j < (few ? 1 : 4); j++) { const a = rnd() * Math.PI * 2, dist = 10 + rnd() * 16; push(x.x + Math.cos(a) * dist, x.y + Math.sin(a) * dist, x.len, 1 + rnd() * (ww * 0.5 + 0.8), a * 180 / Math.PI, true); }
     });
     list.sort((p, q) => p.len - q.len);
     s.dl = Float32Array.from(list.map((p) => p.len));
@@ -454,7 +501,7 @@ function Scia({ pageKey, mode = 'through', ghost = false, stations = false, drop
     </>
   );
   const S = 12 + w * 2.6;
-  return (
+  const out = (
     <div className="scia" ref={rootRef} style={{ width: W, height: H }} aria-hidden="true">
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
         <defs>
@@ -480,12 +527,13 @@ function Scia({ pageKey, mode = 'through', ghost = false, stations = false, drop
         )}
         {stations && geo.st.filter((x) => x.kind === 'node').map((x, i) => <circle key={i} className={`nd ink-${x.ink}`} cx={x.x} cy={x.y} r="5.5"></circle>)}
         <g className="hd" style={{ opacity: 0 }}>
-          {drops && SCIA_SPRAY.map((set, k) => <g key={k} className={`sp sp${k}`}>{set.map(([x, y, r, t], i) => <circle key={i} className={t ? 'tl' : ''} cx={x * S} cy={y * S} r={r * S}></circle>)}</g>)}
+          {drops && !geo.few && SCIA_SPRAY.map((set, k) => <g key={k} className={`sp sp${k}`}>{set.map(([x, y, r, t], i) => <circle key={i} className={t ? 'tl' : ''} cx={x * S} cy={y * S} r={r * S}></circle>)}</g>)}
           <path className="ah" d={sciaArrow(S)}></path>
         </g>
       </svg>
     </div>
   );
+  return geo.pin && geo.pin.el.isConnected ? ReactDOM.createPortal(out, geo.pin.el) : out;
 }
 
 Object.assign(window, { Scia });

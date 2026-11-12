@@ -66,7 +66,9 @@ function App() {
 
   // Su contatti il form è già in pagina: niente CTA "Prenota" (header, menu mobile, barra mobile)
   const showBar = route.page !== 'contatti';
-  const guide = route.page !== 'esperienza' && route.page !== 'pacchetti';
+  const guide = route.page !== 'pacchetti';
+  // Su Esperienza la freccia percorre solo i passaggi del coaching online
+  const sciaMode = route.page === 'esperienza' ? 'steps' : SCIA.mode;
   const pageKey = route.page + (route.params.pack || '');
   const over = route.page === 'home' && !solid && !open;
   React.useEffect(() => { document.body.classList.toggle('has-mbar', showBar); }, [showBar]);
@@ -147,7 +149,7 @@ function App() {
         </div>
       </footer>
 
-      {guide && <Scia key={'s' + pageKey} pageKey={pageKey} {...SCIA} />}
+      {guide && <Scia key={'s' + pageKey} pageKey={pageKey} {...SCIA} mode={sciaMode} />}
 
       {showBar && (
         <div className="mbar">

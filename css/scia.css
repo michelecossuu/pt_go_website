@@ -51,3 +51,18 @@ html.scia-on .fb-list li:not([data-scia-on]) .n{opacity:.35}
 @keyframes sciaPop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
 @keyframes sciaRing{0%{box-shadow:0 0 0 0 rgba(255,255,255,.75)}100%{box-shadow:0 0 0 20px rgba(255,255,255,0)}}
 @media (prefers-reduced-motion:reduce){.tx-card[data-scia-on] .tx-ph+.tx-ph .tx-tag,.cta .btn[data-scia-on]{animation:none}}
+
+/* Esperienza: i pallini dei passaggi si accendono al passaggio della freccia */
+html.scia-on .tl-i::before{transition:background .35s,border-color .35s,transform .35s}
+html.scia-on .tl-i:not([data-scia-on])::before{background:var(--bg);border-color:var(--line-2)}
+.tl-i[data-scia-on]::before{background:#d9192f;border-color:#d9192f;transform:scale(1.15)}
+
+/* Esperienza: pagina ferma mentre la freccia percorre i passaggi del coaching (solo layout orizzontale) */
+/* .pin-run = corsa di scroll durante cui la sezione resta ferma sotto la navbar */
+.pin-run{display:none}
+@media (min-width:961px){
+  /* top negativo: il blocco si ferma quando della fascia rossa sotto i passaggi si vedono solo 56px */
+  .pin-in{position:sticky;top:calc(100vh - var(--pin-cta,100vh) - 56px)}
+  .pin-in .sec-steps{padding-bottom:clamp(64px,7vw,104px)}
+  .pin-run{display:block;height:90vh}
+}
