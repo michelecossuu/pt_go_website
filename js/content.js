@@ -11,9 +11,8 @@ globalThis.window.CONTENT = {
     lastName:    'Ortu',
     fullName:    'Giuliano Ortu',
     title:       'Personal Trainer',
-    location:    'Monza & Brianza',
     tagline:     'Ascolto, metodo, evoluzione.',
-    taglineSub:  'Allenamento su misura, a Monza & Brianza.',
+    taglineSub:  'Allenamento su misura.',
     vatId:       'P.IVA 00011112222',
   },
 
@@ -133,7 +132,7 @@ globalThis.window.CONTENT = {
       tier:       '01 · Entry',
       fullName:   'Essential',
       name:       ['Ess', 'ential'],
-      teaserDesc: 'Schede ogni 6-8 settimane, check-in bi-settimanali.',
+      teaserDesc: 'Schede ogni 6-8 settimane, check bi-settimanali.',
       desc:       'La base solida: programmazione, metodo e costanza per partire bene.',
       monthly:    50,                                         // equivalente mensile sul trimestrale (teaser home)
       prices:     { trimestrale: 150, semestrale: 270, annuale: 510 },
@@ -143,7 +142,7 @@ globalThis.window.CONTENT = {
       tier:       '02 · Più scelto',
       fullName:   'Transformation',
       name:       ['Trans', 'formation'],
-      teaserDesc: 'Check-in settimanali, supporto continuo, linee guida nutrizionali.',
+      teaserDesc: 'Check settimanali, supporto continuo, consigli nutrizionali.',
       teaserPerks: [                                          // punti di valore nel teaser home
         'Revisione della tua esecuzione',
         'Scheda adattata ai tuoi progressi',
@@ -159,13 +158,13 @@ globalThis.window.CONTENT = {
       tier:       '03 · Premium',
       fullName:   'Revolution',
       name:       ['Revo', 'lution'],
-      teaserDesc: 'Piano alimentare completo e 1:1 mensile di revisione.',
+      teaserDesc: '1:1 mensile di revisione e priorità totale in agenda.',
       teaserPerks: [
         'Tutto il piano Transformation',
         'Supporto WhatsApp prioritario',
         'Priorità totale in agenda',
       ],
-      desc:       "L'esperienza completa: indicazioni alimentari, revisione 1:1 e priorità totale.",
+      desc:       "L'esperienza completa: revisione 1:1 mensile e priorità totale in agenda.",
       monthly:    110,
       prices:     { trimestrale: 330, semestrale: 594, annuale: 1122 },
       gold:       true,
@@ -178,14 +177,13 @@ globalThis.window.CONTENT = {
   // Ogni card mostra le voci incluse + quelle dei piani superiori (barrate).
   features: [
     { t: 'Prima call identificazione obiettivi', in: ['essential', 'transformation', 'revolution'] },
-    { t: 'Check-in settimanali',                 in: ['essential', 'transformation', 'revolution'], v: { essential: 'Check-in bi-settimanali' } },
+    { t: 'Check settimanali',                    in: ['essential', 'transformation', 'revolution'], v: { essential: 'Check bi-settimanali' } },
     { t: 'Schede aggiornate ogni 6—8 settimane', in: ['essential', 'transformation', 'revolution'] },
     { t: 'Video e spiegazione esercizi',         in: ['essential', 'transformation', 'revolution'] },
     { t: 'Supporto WhatsApp',                    in: ['essential', 'transformation', 'revolution'], v: { essential: 'Supporto WhatsApp (entro 48h)', transformation: 'Supporto WhatsApp (entro 24h)', revolution: 'Supporto WhatsApp prioritario' } },
     { t: 'Revisione esecuzione esercizi',        in: ['transformation', 'revolution'] },
     { t: 'Adattamento scheda periodico',         in: ['transformation', 'revolution'] },
-    { t: 'Linee guida nutrizionali',             in: ['transformation', 'revolution'] },
-    { t: 'Piano alimentare completo',            in: ['revolution'] },
+    { t: 'Consigli nutrizionali',                in: ['transformation', 'revolution'] },
     { t: '1:1 mensile di revisione',             in: ['revolution'] },
     { t: 'Priorità totale in agenda',            in: ['revolution'] },
   ],
@@ -202,36 +200,32 @@ globalThis.window.CONTENT = {
   pacchetti: {
     eyebrow: 'I Pacchetti',
     title:   "Tre percorsi.<br/>Il <em>tuo</em>, in fondo, è uno solo.",
-    meta:    'Coaching 1:1 su misura. Allenati dove vuoi: io porto metodo, programmazione e supporto costante.',
     perks:   ['Prima call gratuita', 'Sconti fino a −15%'],
     singleLesson: {
       eyebrow: 'Scheda',
       title:   'Ti preparo la scheda di allenamento personalizzata',
-      desc:    'Senza pacchetto: una scheda costruita sui tuoi obiettivi. Prima call gratuita inclusa.',
+      desc:    'Nessun abbonamento: una scheda costruita sui tuoi obiettivi. Prima call gratuita inclusa.',
       price:   '€40',
-      per:     'una tantum',
     },
     compare: {
       label: 'Cosa è incluso',
       rows: [
-        ['Prima call identificazione obiettivi', '✓',             '✓',           '✓'        ],
+        ['Prima call - identificazione obiettivi', '✓',             '✓',           '✓'        ],
         ['Schede personalizzate',                'Ogni 6—8 sett.','Ogni 6—8 sett.','Ogni 6—8 sett.'],
-        ['Check-in',                             'Bi-settimanali','Settimanali',  'Settimanali'],
+        ['Check andamento',                      'Bi-settimanali','Settimanali',  'Settimanali'],
         ['Video e spiegazione esercizi',         '✓',             '✓',           '✓'        ],
         ['Supporto WhatsApp',                    'Entro 48h',     'Entro 24h',   'Prioritario'],
         ['Revisione esecuzione esercizi',        '—',             '✓',           '✓'        ],
         ['Adattamento scheda periodico',         '—',             '✓',           '✓'        ],
-        ['Linee guida nutrizionali',             '—',             '✓',           '✓'        ],
-        ['Piano alimentare completo',            '—',             '—',           '✓'        ],
+        ['Consigli nutrizionali',                '—',             '✓',           '✓'        ],
         ['1:1 mensile di revisione',             '—',             '—',           '✓'        ],
         ['Priorità totale in agenda',            '—',             '—',           '✓'        ],
       ],
-      // Le righe prezzo (una per ciclo) sono generate da packs[].prices
     },
     faq: [
       {
         q: 'Come funzionano gli sconti su semestrale e annuale?',
-        a: "Più lungo è l'impegno, più scende il prezzo mensile equivalente: il trimestrale è la base, −10% sul semestrale, −15% sull'annuale. Il pagamento avviene in un'unica soluzione al momento dell'attivazione.",
+        a: "Più lungo è il percorso, più scende il prezzo mensile equivalente: il trimestrale è la base, −10% sul semestrale, −15% sull'annuale. Il pagamento avviene in un'unica soluzione al momento dell'attivazione.",
       },
       {
         q: 'Posso cambiare pacchetto durante il percorso?',
@@ -242,12 +236,8 @@ globalThis.window.CONTENT = {
         a: 'Assolutamente sì. I pacchetti sono pensati per essere seguiti ovunque: nella tua palestra, a casa, in viaggio. Ti fornisco programmazione, video e supporto — la sala te la scegli tu.',
       },
       {
-        q: 'Quanto velocemente vedrò risultati?',
-        a: "Dipende dal punto di partenza e dalla costanza. La maggior parte dei clienti nota cambiamenti visibili tra la quarta e l'ottava settimana. Lavoro per risultati duraturi, non per stupire la bilancia in due settimane.",
-      },
-      {
-        q: 'Il piano alimentare è incluso in tutti i pacchetti?',
-        a: "Le linee guida nutrizionali sono incluse dal Transformation. Il piano alimentare completo, con calcolo dei macronutrienti e indicazioni sui pasti, è incluso solo nel Revolution.",
+        q: 'I consigli nutrizionali sono inclusi in tutti i pacchetti?',
+        a: "Sono inclusi dal Transformation in su: consigli generali per sostenere l'allenamento. Non elaboro piani alimentari: per una dieta specifica ti indirizzo a un professionista abilitato (nutrizionista o dietista).",
       },
       {
         q: 'Lavori con principianti?',
@@ -271,7 +261,7 @@ globalThis.window.CONTENT = {
       title:   "Una vita dedicata allo sport,<br/> alla nutrizione e alle <em>persone</em>.",
       meta:    'Personal Trainer certificato, formato in anatomia e fisiologia e specializzato in ricomposizione corporea e riabilitazione funzionale.',
     },
-    badge: 'Disponibile · Monza & Brianza',
+    badge: 'Disponibile',
     photo: { src: null, alt: 'Ritratto di Giuliano · verticale 4:5' },
     bio: [
       'Ho sempre fatto sport, e mi ha insegnato i valori della disciplina, del controllo e della crescita personale. Per questo motivo, ho deciso di mettermi in gioco come personal trainer per trasmettere agli altri ciò che per me è fondamentale nella vita — la passione, la dedizione e la trasformazione consapevole.',
@@ -307,7 +297,7 @@ globalThis.window.CONTENT = {
         { years: '2014 — 2016', place: 'Body & Soul Fitness Center',    desc: 'Trainer di sala e responsabile dei corsi di forza. Primo contatto con la programmazione per atleti agonisti.'                           },
         { years: '2016 — 2020', place: 'Sardinia Strength Lab',         desc: 'Co-fondatore di uno spazio dedicato a forza e powerlifting. Preparazione di sei atleti per gare nazionali FIPE.'                        },
         { years: '2020 — 2023', place: 'Coach online — Stagione pandemia', desc: 'Costruito un programma di coaching da remoto per 80+ clienti in tutta Italia. Sviluppo del metodo personale.'                       },
-        { years: '2023 — Oggi', place: 'Studio Privato · Monza & Brianza', desc: 'Spazio personale dedicato 1-to-1, con valutazione funzionale, area pesi e nutrizione integrata.'                                    },
+        { years: '2023 — Oggi', place: 'Studio Privato', desc: 'Spazio personale dedicato 1-to-1, con valutazione funzionale, area pesi e nutrizione integrata.'                                    },
       ],
     },
     cta: {

@@ -32,7 +32,7 @@ const Photo = ({ photo, eager }) => photo && photo.src
   : <div className="ph ph-empty"><span>{photo && photo.alt}</span></div>;
 
 const SectionHead = ({ n, label, title, meta, page }) => (
-  <div className="shead rv">
+  <div className={`shead rv${meta ? "" : " shead-solo"}`}>
     <div>
       <div className="label">{n && <span className="n">{n}</span>}<span className="rule"></span>{label}</div>
       {page
