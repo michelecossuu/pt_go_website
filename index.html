@@ -64,6 +64,7 @@ function App() {
 
   React.useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); setOpen(false); }, [route.page, route.params.pack]);
 
+  // Su contatti il form è già in pagina: niente CTA "Prenota" (header, menu mobile, barra mobile)
   const showBar = route.page !== 'contatti';
   const guide = route.page !== 'esperienza' && route.page !== 'pacchetti';
   const pageKey = route.page + (route.params.pack || '');
@@ -100,7 +101,7 @@ function App() {
             {NAV.map((n) => <button key={n.id} className={`nav-link ${route.page === n.id ? 'on' : ''}`} onClick={() => go(n.id)}>{n.label}</button>)}
           </div>
           <div className="nav-end">
-            <button className="btn btn-line" onClick={() => openContact()}>Prenota <span className="ar">→</span></button>
+            {showBar && <button className="btn btn-line" onClick={() => openContact()}>Prenota <span className="ar">→</span></button>}
             <button className="burger" onClick={() => setOpen(!open)} aria-label="Menu" aria-expanded={open}>{open ? <Icons.Close /> : <Icons.Menu />}</button>
           </div>
         </div>
@@ -109,7 +110,7 @@ function App() {
       {open && (
         <div className="mmenu">
           {NAV.map((n) => <button key={n.id} className={`nav-link ${route.page === n.id ? 'on' : ''}`} onClick={() => go(n.id)}>{n.label}</button>)}
-          <button className="btn btn-red" onClick={() => openContact()}>Prenota una consulenza <span className="ar">→</span></button>
+          {showBar && <button className="btn btn-red" onClick={() => openContact()}>Prenota una consulenza <span className="ar">→</span></button>}
         </div>
       )}
 

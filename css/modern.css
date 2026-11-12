@@ -25,7 +25,7 @@ a:hover{color:var(--red)}
 .mmenu .nav-link.on{background:none;color:var(--red);font-style:normal}
 
 .sec{padding:clamp(64px,8vw,120px) 0}
-.sec-first{padding-top:clamp(32px,4vw,64px)}
+.sec-first{padding-top:clamp(16px,2vw,32px)}
 .sec-tight{padding-top:0}
 .shead{margin-bottom:clamp(36px,4vw,56px)}
 .hero{min-height:0;align-items:center;padding-top:clamp(16px,2.5vw,40px);padding-bottom:clamp(32px,4vw,56px)}
@@ -107,7 +107,6 @@ a:hover{color:var(--red)}
 .single h3{font:600 30px/1.1 var(--serif);letter-spacing:-.03em}
 .single p{max-width:none}
 .single-price .a{font:600 52px/1 var(--serif);letter-spacing:-.04em}
-.page-pk .sec-first{padding-top:clamp(16px,2vw,32px)}
 .page-pk .sec-first .shead{margin-bottom:clamp(28px,3vw,40px)}
 .page-pk .sec-first{padding-bottom:clamp(48px,5vw,72px)}
 .page-pk .compare{margin-top:clamp(48px,5vw,72px)}
@@ -133,9 +132,20 @@ a:hover{color:var(--red)}
 .crow .v{font:500 21px/1.2 var(--serif);letter-spacing:-.015em}
 .form{border:0;border-radius:var(--r);background:var(--card)}
 .field input,.field select,.field textarea{border-radius:12px;background-color:var(--bg)}
+.field.bad input{border-color:var(--red);background-color:#fbeeec;box-shadow:0 0 0 3px rgba(217,25,47,.12)}
+.field.bad .flabel{color:var(--red)}
+.fcount{align-self:flex-end;margin-top:-6px;line-height:1;font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
+.fcount.full{color:var(--red)}
+.consent.bad{color:var(--red-2)}
+.consent a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.consent a:hover{color:var(--red)}
+.consent.bad input{outline:2px solid var(--red);outline-offset:1px;border-radius:4px}
 .field input::placeholder,.field textarea::placeholder{color:#859392}
 .field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23475857' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")}
 .pill{font:500 14px/1 var(--sans);letter-spacing:0}
+.pill:has(.pill-bd){display:inline-flex;align-items:center;gap:8px;padding-right:6px}
+.pill-bd{padding:6px 9px;border-radius:999px;background:var(--mint);color:var(--teal-2);font:700 12px/1 var(--sans);font-style:normal;letter-spacing:.02em}
+.pill.on .pill-bd{background:var(--red);color:#fff}
 .thanks .ok{border:0;background:var(--mint)}
 
 @media (max-width:960px){

@@ -38,24 +38,36 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
   const { form, thankYou, intro } = contatti;
 
   const [pack, setPack] = React.useState(preselectedPack || '');
-  const [cycle, setCycle] = React.useState(preselectedCycle || 'trimestrale');
+  const [cycle, setCycle] = React.useState(preselectedCycle || 'annuale');
   const [sent, setSent] = React.useState(false);
   const [data, setData] = React.useState(EMPTY_FORM);
   const [errors, setErrors] = React.useState({});
-  const set = (k) => (e) => setData({ ...data, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value });
+  const set = (k) => (e) => {
+    setData({ ...data, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value });
+    if (errors[k]) setErrors({ ...errors, [k]: false });
+  };
 
   React.useEffect(() => {
     if (preselectedPack) setPack(preselectedPack);
     if (preselectedCycle) setCycle(preselectedCycle);
   }, [preselectedPack, preselectedCycle]);
 
+  // Pacchetto senza ciclo ('' = Non so ancora, 'singola'): passando a un pacchetto con ciclo parte da annuale
+  const hasCycle = (id) => id && id !== 'singola';
+  const selectPack = (id) => {
+    if (hasCycle(id) && !hasCycle(pack)) setCycle('annuale');
+    setPack(id);
+  };
+
   const submit = (ev) => {
     ev.preventDefault();
     const e = {};
-    if (!data.name.trim()) e.name = form.errors.name;
-    if (!data.email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) e.email = form.errors.email;
-    if (!data.consent) e.consent = form.errors.consent;
+    if (!data.name.trim()) e.name = true;
+    if (!data.email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) e.email = true;
+    if (!data.consent) e.consent = true;
     setErrors(e);
+    const first = ['name', 'email', 'consent'].find((k) => e[k]);
+    if (first) document.getElementById(first === 'consent' ? 'f-consent' : `f-${first}`)?.focus();
     if (!Object.keys(e).length) { setSent(true); window.scrollTo({ top: 0 }); }
   };
 
@@ -78,14 +90,13 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
     { ic: <Icons.Chat />, lb: 'Telefono · WhatsApp', v: contact.phone, href: contact.whatsappUrl, ext: true },
     { ic: <Icons.Mail />, lb: 'Email', v: contact.email, href: contact.emailHref },
     { ic: <Icons.Instagram />, lb: 'Instagram', v: contact.instagram, href: contact.instagramUrl, ext: true },
-    { ic: <Icons.Pin />, lb: 'Studio', v: <>{contact.address}<br/>{contact.postalCode} {contact.city}</>, href: contact.mapsUrl, ext: true },
   ];
 
   return (
     <div className="page" data-screen-label="Contatti">
       <section className="sec sec-first">
         <div className="wrap">
-          <SectionHead page label={intro.eyebrow} title={intro.title} meta={intro.meta} />
+          <SectionHead page label={intro.eyebrow} title={intro.title} />
           <div className="split">
             <div>
               <div className="clist">
@@ -109,13 +120,11 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
               <div className="frow">
                 <div className={`field ${errors.name ? 'bad' : ''}`}>
                   <label className="flabel" htmlFor="f-name">Nome e cognome *</label>
-                  <input id="f-name" type="text" value={data.name} onChange={set('name')} placeholder={form.placeholders.name} autoComplete="name" />
-                  {errors.name && <div className="err">{errors.name}</div>}
+                  <input id="f-name" type="text" value={data.name} onChange={set('name')} aria-invalid={!!errors.name} placeholder={form.placeholders.name} autoComplete="name" />
                 </div>
                 <div className={`field ${errors.email ? 'bad' : ''}`}>
                   <label className="flabel" htmlFor="f-email">Email *</label>
-                  <input id="f-email" type="email" value={data.email} onChange={set('email')} placeholder={form.placeholders.email} autoComplete="email" />
-                  {errors.email && <div className="err">{errors.email}</div>}
+                  <input id="f-email" type="email" value={data.email} onChange={set('email')} aria-invalid={!!errors.email} placeholder={form.placeholders.email} autoComplete="email" />
                 </div>
               </div>
               <div className="frow">
@@ -132,29 +141,33 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
                 <span className="flabel">Pacchetto di interesse</span>
                 <div className="pills">
                   {form.packOptions.map((p) => (
-                    <button key={p.id || 'none'} type="button" className={`pill ${pack === p.id ? 'on' : ''}`} onClick={() => setPack(p.id)}>{p.label}</button>
+                    <button key={p.id || 'none'} type="button" className={`pill ${pack === p.id ? 'on' : ''}`} onClick={() => selectPack(p.id)}>{p.label}</button>
                   ))}
                 </div>
               </div>
-              {pack && pack !== 'singola' && (
+              {hasCycle(pack) && (
                 <div className="field">
                   <span className="flabel">Periodo di fatturazione</span>
                   <div className="pills">
                     {form.cycleOptions.map((c) => (
-                      <button key={c.id} type="button" className={`pill ${cycle === c.id ? 'on' : ''}`} onClick={() => setCycle(c.id)}>{c.label}</button>
+                      <button key={c.id} type="button" className={`pill ${cycle === c.id ? 'on' : ''}`} onClick={() => setCycle(c.id)}>{c.label}{c.badge && <em className="pill-bd">{c.badge}</em>}</button>
                     ))}
                   </div>
                 </div>
               )}
               <div className="field">
                 <label className="flabel" htmlFor="f-msg">Messaggio</label>
-                <textarea id="f-msg" value={data.message} onChange={set('message')} placeholder={form.placeholders.message} />
+                <textarea id="f-msg" value={data.message} onChange={set('message')} placeholder={form.placeholders.message} maxLength={form.messageMaxLength} aria-describedby="f-msg-count" />
+                <div id="f-msg-count" className={`fcount ${data.message.length >= form.messageMaxLength ? 'full' : ''}`}>{data.message.length}/{form.messageMaxLength}</div>
               </div>
-              <label className="consent">
-                <input type="checkbox" checked={data.consent} onChange={set('consent')} />
+              <label className={`consent ${errors.consent ? 'bad' : ''}`}>
+                <input id="f-consent" type="checkbox" checked={data.consent} onChange={set('consent')} aria-invalid={!!errors.consent} />
                 <span>
-                  {form.consentText}
-                  {errors.consent && <span className="err" style={{ display: 'block', marginTop: 4 }}>{errors.consent}</span>}
+                  {form.consent.pre}
+                  <a href={contact.privacyUrl} target="_blank" rel="noreferrer">{form.consent.privacyLabel}</a>
+                  {form.consent.mid}
+                  <a href={contact.termsUrl} target="_blank" rel="noreferrer">{form.consent.termsLabel}</a>
+                  {form.consent.post}
                 </span>
               </label>
               <div className="fsub">

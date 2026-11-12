@@ -24,6 +24,8 @@ globalThis.window.CONTENT = {
     emailHref:    'mailto:giuliano@ortupt.it',
     instagram:    '@giuliano.ortu.pt',
     instagramUrl: 'https://instagram.com/',
+    privacyUrl:   'privacy.html', // TODO: pagina ancora da creare
+    termsUrl:     'termini.html', // TODO: pagina ancora da creare
     whatsappUrl:  'https://wa.me/393331234567',
     mapsUrl:      'https://maps.google.com/?q=Via+Di+Triuggio+20+Triuggio',
     address:      'Via Di Triuggio 20',
@@ -310,8 +312,7 @@ globalThis.window.CONTENT = {
   contatti: {
     intro: {
       eyebrow: 'Contatti',
-      title:   "Scrivimi.<br/>La prima consulenza è <em>gratuita</em>.",
-      meta:    'Rispondo personalmente entro 24 ore. Niente segreteria, niente form passati a uno staff: parli con me.',
+      title:   "Scrivimi.<br/>La prima consulenza<br/>è <em>gratuita</em>.",
     },
     form: {
       goals: [
@@ -323,11 +324,6 @@ globalThis.window.CONTENT = {
         { value: 'riab',         label: 'Riabilitazione'          },
         { value: 'altro',        label: 'Altro'                   },
       ],
-      errors: {
-        name:    'Inserisci il tuo nome',
-        email:   'Email non valida',
-        consent: 'Necessario per procedere',
-      },
       placeholders: {
         name:    'Mario Rossi',
         email:   'mario@email.it',
@@ -335,7 +331,15 @@ globalThis.window.CONTENT = {
         goal:    'Seleziona...',
         message: 'Raccontami qualcosa di te: il tuo punto di partenza, cosa hai già provato, cosa vorresti cambiare...',
       },
-      consentText: 'Acconsento al trattamento dei miei dati personali per essere ricontattato. I dati non saranno condivisi con terzi e potranno essere cancellati su richiesta.',
+      messageMaxLength: 500,
+      // Testo consenso: pre + link privacy + mid + link termini + post
+      consent: {
+        pre:          'Ho letto e accetto la ',
+        privacyLabel: 'privacy policy',
+        mid:          ' e i ',
+        termsLabel:   'termini di servizio',
+        post:         '. Acconsento al trattamento dei miei dati per essere ricontattato: non saranno condivisi con terzi e potranno essere cancellati su richiesta.',
+      },
       submitNote:  'Risposta entro 24 ore · Consulenza iniziale gratuita',
     },
     thankYou: {
@@ -374,5 +378,6 @@ CONTENT.contatti.form.packOptions = [
 // Opzioni ciclo per il form contatti — derivate da CONTENT.cycles
 CONTENT.contatti.form.cycleOptions = CONTENT.cycles.map((c) => ({
   id:    c.id,
-  label: c.badge ? `${c.label} ${c.badge}` : c.label,
+  label: c.label,
+  badge: c.badge,
 }));
