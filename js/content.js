@@ -58,8 +58,8 @@ globalThis.window.CONTENT = {
       ctaGhost:   'Prenota una consulenza',
       photo:      { src: px(5327466, 2200), alt: 'Giuliano in palestra · orizzontale, soggetto sulla destra' },
       pillars: [
+        { icon: 'Route',   lines: ['Percorso', 'strutturato'] },
         { icon: 'Barbell', lines: ['Allenamento', 'su misura'] },
-        { icon: 'Leaf',    lines: ['Coaching', 'nutrizionale'] },
         { icon: 'Chat',    lines: ['Supporto', 'continuo'] },
       ],
     },
@@ -71,20 +71,42 @@ globalThis.window.CONTENT = {
       principles: [
         { title: 'La persona prima del programma', desc: 'Obiettivi, tempi e storia fisica guidano ogni scelta.' },
         { title: 'Progressi, non perfezione',      desc: 'Piccoli passi costanti valgono più di sforzi eroici e brevi.' },
-        { title: 'Niente scorciatoie',             desc: 'Tecnica, recupero e alimentazione sostenibile: risultati che restano.' },
+        { title: 'Niente scorciatoie',             desc: 'Tecnica, recupero e costanza: risultati che restano.' },
       ],
       cta:       'Chi sono',
-      signature: '— Giuliano',
     },
     transformations: {
       eyebrow: 'Trasformazioni',
       title:   'Persone vere,<br/>risultati <em>veri</em>.',
-      note:    'Foto pubblicate con il consenso dei clienti.',
+      note:    'Recensioni pubblicate con il consenso dei clienti.',
+      prev: 'Recensione precedente', next: 'Recensione successiva',
+      labels:  { story: 'La storia', improved: 'Cosa è cambiato', quote: 'Com’è stato con Giuliano' },
+      // TODO: sostituire con recensioni reali dei clienti
       items: [
-        { name: 'Marta T.',  result: '−11 kg · 6 mesi',         before: px(4162544, 700), after: px(3837423, 700)  },
-        { name: 'Michele C.',   result: '+5 kg magri · 8 mesi',    before: px(5496591, 700), after: px(9073246, 700)  },
-        { name: 'Emma T.',   result: '−7 kg · 4 mesi',          before: px(6455942, 700), after: px(12314077, 700) },
-        { name: 'Federico D.', result: 'Ricomposizione · 1 anno', before: px(3838706, 700), after: px(3926644, 700)  },
+        {
+          name: 'Marta T.', rating: 5, result: '−11 kg · 6 mesi',
+          story:    'Lavoro d’ufficio, poco tempo e diverse ripartenze finite dopo poche settimane.',
+          improved: 'Più energia durante la giornata, mal di schiena sparito e un’abitudine all’allenamento che finalmente regge.',
+          quote:    'Mi ha ascoltata davvero. Il programma si adattava alle mie settimane, non il contrario.',
+        },
+        {
+          name: 'Michele C.', rating: 5, result: '+5 kg magri · 8 mesi',
+          story:    'Mi allenavo da anni senza un piano preciso e senza vedere progressi.',
+          improved: 'Carichi aumentati su tutti i fondamentali, tecnica più pulita e una progressione chiara.',
+          quote:    'Precisione e costanza: ogni check aveva un motivo, ogni modifica un perché.',
+        },
+        {
+          name: 'Emma T.', rating: 5, result: '−7 kg · 4 mesi',
+          story:    'Ripartivo da zero dopo la gravidanza, con poca fiducia e tanta paura di sbagliare.',
+          improved: 'Forza ritrovata, postura migliore e la sicurezza di allenarmi da sola in palestra.',
+          quote:    'Sempre presente su WhatsApp, mai giudicante. Mi sono sentita seguita passo dopo passo.',
+        },
+        {
+          name: 'Federico D.', rating: 5, result: 'Ricomposizione · 1 anno',
+          story:    'Dopo un infortunio alla spalla avevo smesso di allenarmi con continuità.',
+          improved: 'Spalla stabile, composizione corporea migliorata e allenamenti senza dolore.',
+          quote:    'Metodo serio e tanta pazienza. Mi ha riportato in palestra con la testa giusta.',
+        },
       ],
     },
     method: {
@@ -94,32 +116,30 @@ globalThis.window.CONTENT = {
       photo:   { src: px(31618281), alt: 'Giuliano durante un esercizio · es. curl con manubrio, verticale' },
       chip:    { title: 'Consulenza gratuita', sub: 'Il primo passo' },
       steps: [
-        { title: 'Valutazione iniziale',     desc: 'Test funzionali, analisi posturale e composizione corporea. Si parte dai dati, non dalle sensazioni.' },
-        { title: 'Programmazione su misura', desc: 'Schede progressive che si adattano al tuo ritmo settimanale, alla tua condizione e ai tuoi obiettivi.' },
-        { title: 'Supporto continuo',        desc: "WhatsApp diretto, revisioni mensili e monitoraggio costante. Non sei solo tra una sessione e l'altra." },
+        { title: 'Valutazione iniziale',     desc: 'Test funzionali, analisi tecnica dell’esercizio e analisi posturale. Si parte dai dati, non dalle sensazioni.' },
+        { title: 'Programmazione su misura', desc: 'Schede che si adattano al tuo ritmo, alla tua condizione e ai tuoi obiettivi.' },
+        { title: 'Supporto continuo',        desc: 'Non abbiamo appuntamenti fissi: se hai dubbi mi scrivi un messaggio; se hai bisogno di confrontarti, fissiamo un incontro. Non sei solo tra una sessione e l’altra, hai il tuo trainer sempre a portata di mano.' },
       ],
     },
     effort: {
       eyebrow: 'La fatica buona',
       title:   'Quella che ti lascia<br/><em>più forte</em> di prima.',
-      text:    "L'ultima ripetizione è quella che conta. Ti porto al meglio delle tue potenzialità, con tecnica e recupero.",
+      text:    'Non le solite schede pre-impostate, ma progressioni strutturate. Ti porto al meglio delle tue potenzialità, con tecnica e recupero.',
       photo:   { src: px(3838705, 2000), alt: 'Momento di fatica a fine serie · orizzontale, luce scura' },
       values:  ['Disciplina', 'Costanza', 'Risultati'],
     },
     packTeaser: {
       eyebrow: 'Pacchetti',
-      title:   "Tre percorsi,<br/>un solo <em>obiettivo</em>.",
+      title:   "Tre percorsi,<br/>ma il tuo è <em>uno solo</em>.",
       meta:    'Dalla scheda mensile al coaching completo. Scegli la profondità del supporto in base al tuo momento.',
       cta:     'Confronta tutti i pacchetti',
+      more:    'Scopri dettagli e prezzi',
     },
     roots: {
       caption: ['Piccoli passi,', 'grandi risultati.'],
       photo:   { src: 'assets/capocaccia.jpg', alt: 'Capo Caccia e l\'isola Foradada, Alghero' },
-      stats: [
-        { value: '12',  unit: '+', label: 'Anni di esperienza'  },
-        { value: '340', unit: '+', label: 'Clienti seguiti'     },
-        { value: '98',  unit: '%', label: 'Obiettivi raggiunti' },
-      ],
+      // Numeri nascosti finché non ci sono dati reali. Formato: { value: '12', unit: '+', label: 'Anni di esperienza' }
+      stats: [],
     },
     cta: {
       title:  'Piuttosto che immaginare,<br/><em>prova.</em>',   // l'<em> serve: la freccia lo sottolinea
@@ -134,9 +154,8 @@ globalThis.window.CONTENT = {
       tier:       '01 · Entry',
       fullName:   'Essential',
       name:       ['Ess', 'ential'],
-      teaserDesc: 'Schede ogni 6-8 settimane, check bi-settimanali.',
+      tagline:    'Livello base',                             // descrizione breve nel teaser home
       desc:       'La base solida: programmazione, metodo e costanza per partire bene.',
-      monthly:    50,                                         // equivalente mensile sul trimestrale (teaser home)
       prices:     { trimestrale: 150, semestrale: 270, annuale: 510 },
     },
     {
@@ -144,14 +163,8 @@ globalThis.window.CONTENT = {
       tier:       '02 · Più scelto',
       fullName:   'Transformation',
       name:       ['Trans', 'formation'],
-      teaserDesc: 'Check settimanali, supporto continuo, consigli nutrizionali.',
-      teaserPerks: [                                          // punti di valore nel teaser home
-        'Revisione della tua esecuzione',
-        'Scheda adattata ai tuoi progressi',
-        'Risposta su WhatsApp entro 24h',
-      ],
+      tagline:    'La chiave di svolta',
       desc:       'Il percorso più richiesto: supporto, ritmo e adattamenti continui.',
-      monthly:    83,
       prices:     { trimestrale: 250, semestrale: 450, annuale: 850 },
       featured:   true,
     },
@@ -160,14 +173,8 @@ globalThis.window.CONTENT = {
       tier:       '03 · Premium',
       fullName:   'Revolution',
       name:       ['Revo', 'lution'],
-      teaserDesc: '1:1 mensile di revisione e priorità totale in agenda.',
-      teaserPerks: [
-        'Tutto il piano Transformation',
-        'Supporto WhatsApp prioritario',
-        'Priorità totale in agenda',
-      ],
+      tagline:    'Esperienza premium',
       desc:       "L'esperienza completa: revisione 1:1 mensile e priorità totale in agenda.",
-      monthly:    110,
       prices:     { trimestrale: 330, semestrale: 594, annuale: 1122 },
       gold:       true,
     },
@@ -260,8 +267,8 @@ globalThis.window.CONTENT = {
   esperienza: {
     intro: {
       eyebrow: 'Chi sono',
-      title:   "Una vita dedicata allo sport,<br/> alla nutrizione e alle <em>persone</em>.",
-      meta:    'Personal Trainer Invictus Academy, laureato in Farmacia, con un approccio che unisce allenamento e nutrizione.',
+      title:   "Una vita dedicata allo sport,<br/> al movimento e alle <em>persone</em>.",
+      meta:    'Personal Trainer Invictus Academy, laureato in Farmacia, con un approccio che mette al centro allenamento e persona.',
     },
     badge: 'Disponibile',
     photo: { src: null, alt: 'Ritratto di Giuliano · verticale 4:5' },

@@ -116,17 +116,16 @@ button{font-family:inherit}
 
 /* Home · packs teaser */
 .tease{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.tease-item{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:18px;min-height:380px;padding:40px clamp(24px,2.6vw,40px) 36px;background:var(--bg);border:0;color:var(--text);text-align:left;font:inherit;cursor:pointer;transition:background .3s}
+.tease-item{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:18px;min-height:280px;padding:40px clamp(24px,2.6vw,40px) 36px;background:var(--bg);border:0;color:var(--text);text-align:left;font:inherit;cursor:pointer;transition:background .3s}
 .tease-item+.tease-item{border-left:1px solid var(--line)}
 .tease-item:hover{background:var(--bg-1)}
 .tease-item.feat{background:linear-gradient(180deg,rgba(230,18,46,.09),rgba(230,18,46,0) 65%)}
 .tease-item.feat::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:var(--red)}
 .tease-item p{color:var(--dim);font-size:14px;line-height:1.6}
-.tease-price{display:flex;align-items:baseline;gap:6px;width:100%;margin-top:auto;padding-top:24px;border-top:1px solid var(--line)}
-.tease-price .a{font:500 44px/1 var(--serif);font-variant-numeric:lining-nums}
-.tease-price .p{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
-.tease-price .ar{margin-left:auto;font-size:18px;color:var(--dim);transition:transform .3s var(--ease),color .3s}
-.tease-item:hover .tease-price .ar{transform:translateX(4px);color:var(--red)}
+.tease-item .tease-tag{font:500 clamp(18px,1.4vw,21px)/1.35 var(--sans);color:var(--text)}
+.tease-more{display:flex;align-items:center;gap:10px;width:100%;margin-top:auto;padding-top:22px;border-top:1px solid var(--line);font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.tease-more .ar{margin-left:auto;font-size:18px;letter-spacing:0;color:var(--dim);transition:transform .3s var(--ease),color .3s}
+.tease-item:hover .tease-more .ar{transform:translateX(4px);color:var(--red)}
 .center{display:flex;justify-content:center;margin-top:40px}
 .tier{font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
 .feat .tier{color:var(--red-soft)}

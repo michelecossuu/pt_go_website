@@ -45,8 +45,8 @@ html.scia-on .fb-list li::after{transition:width .7s cubic-bezier(.2,.7,.2,1)}
 .fb-list li[data-scia-on]::after{width:100%}
 html.scia-on .fb-list .n{transition:opacity .45s}
 html.scia-on .fb-list li:not([data-scia-on]) .n{opacity:.35}
-.tease-item[data-scia-on] .tease-price .ar{transform:translateX(4px);color:var(--red)}
-.tease-item.feat[data-scia-on] .tease-price .ar{color:#ff7385}
+.tease-item[data-scia-on] .tease-more .ar{transform:translateX(4px);color:var(--red)}
+.tease-item.feat[data-scia-on] .tease-more .ar{color:#ff7385}
 .cta .btn[data-scia-on]{animation:sciaRing 1.8s ease-out 3}
 @keyframes sciaPop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
 @keyframes sciaRing{0%{box-shadow:0 0 0 0 rgba(255,255,255,.75)}100%{box-shadow:0 0 0 20px rgba(255,255,255,0)}}

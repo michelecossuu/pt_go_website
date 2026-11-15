@@ -128,7 +128,7 @@ const sciaAcross = (c, els, yLine, side) => {
 function sciaHome(page, c) {
   const q = (s, r = page) => r.querySelector(s), qa = (s, r = page) => [...r.querySelectorAll(s)];
   const R = sciaRect, { X, add, at } = c;
-  const need = ['.hx .label .rule', '.coach-copy', '.tx-card', '.steps .step .num', '.fb-list li', '.tease-item .tease-price', '.ab-stat .n', '.cta h2 em'];
+  const need = ['.hx .label .rule', '.coach-copy', '.tx-card', '.steps .step .num', '.fb-list li', '.tease-item .tease-more', '.cta h2 em'];
   if (need.some((s) => !q(s))) return false;
   const glyph = (el) => { const rg = document.createRange(); rg.selectNodeContents(el); return rg.getBoundingClientRect().width; };
 
@@ -152,7 +152,7 @@ function sciaHome(page, c) {
   // Trasformazioni: passa nello spazio libero sopra le card e le accende una a una
   const txEl = q('.tx'), tx = R(txEl), grid = R(q('.tx-grid')), txh = R(q('.tx-head'));
   add(X[0], tx.t + sciaPf(sciaCs(txEl).paddingTop) * 0.5, 'd');
-  let side = sciaAcross(c, qa('.tx-card'), (txh.b + grid.t) / 2, 0);
+  let side = sciaAcross(c, qa('.tx-card').filter((el) => R(el).l < grid.r - 1), (txh.b + grid.t) / 2, 0);  // solo le card visibili nel carosello
   add(X[side], grid.b + 24, 'd');
 
   // Metodo: ampia curva sotto il testo, poi linea del tempo dietro i numeri 01-02-03
@@ -202,17 +202,17 @@ function sciaHome(page, c) {
   side = sciaAcross(c, qa('.tease-item'), sh ? (R(sh).b + tease.t) / 2 : tease.t - 24, side);
   add(X[side], tease.b + 24, 'd');
 
-  // Radici: passa sotto i numeri e li fa contare
+  // Radici: passa sotto i numeri e li fa contare (senza numeri scende accanto alla didascalia)
   const abEl = q('.ab'), ab = R(abEl), abIn = q('.ab-in');
   const stats = qa('.ab-stat'), sr = stats.map(R), capEl = q('.ab-cap'), cap = capEl ? R(capEl) : null;
-  const sy = Math.max(...sr.map((r) => r.b)) + 16;
+  const sy = sr.length ? Math.max(...sr.map((r) => r.b)) + 16 : (cap ? cap.b : R(abIn).b) + 56;  // margine ampio: la didascalia è ruotata e la 'g' scende oltre il box
   if (side === 0) {
     const yA = ab.t + sciaPf(sciaCs(abIn).paddingTop) * 0.45;
     add(X[0], yA - 40, 'd');
     add(X[1], yA + 40, 'd');
   }
   add(X[1], sy - 28, 'd');
-  sciaRide(c, [{ y: sy, l: Math.min(...sr.map((r) => r.l)), r: Math.max(...sr.map((r) => r.r), cap && cap.b <= sy ? cap.r : 0), items: stats.map((s, i) => ({ el: q('.n', s), x: sr[i].l + sr[i].w / 2, kind: 'count' })).sort((a, b) => a.x - b.x) }], 1);
+  if (sr.length) sciaRide(c, [{ y: sy, l: Math.min(...sr.map((r) => r.l)), r: Math.max(...sr.map((r) => r.r), cap && cap.b <= sy ? cap.r : 0), items: stats.map((s, i) => ({ el: q('.n', s), x: sr[i].l + sr[i].w / 2, kind: 'count' })).sort((a, b) => a.x - b.x) }], 1);
   add(X[0], sy + 28, 'd');
 
   // Prova: sottolinea e indica il pulsante
@@ -444,7 +444,7 @@ function Scia({ pageKey, mode = 'through', ghost = false, stations = false, drop
     const rnd = sciaRng(7), ww = s.w, list = [];
     const ang = (i) => { const a = Math.max(0, i - 2), b = Math.min(n, i + 2); return Math.atan2(ys[b] - ys[a], xs[b] - xs[a]); };
     const ox = geo.pin ? geo.pin.ox : 0, oy = geo.pin ? geo.pin.oy : 0, few = geo.few;
-    const ko = [...document.querySelectorAll('.page :is(h1,h2,h3,p,figcaption,.label,.btn,.tx-tag,.tease-price,.num,.ab-stat,.ab-cap,.hx-pill,.ph-list li,.fb-list li,.tier,.pname,.sig,.yr)')].map(sciaRect).map((r) => ({ l: r.l - 8 - ox, r: r.r + 8 - ox, t: r.t - 8 - oy, b: r.b + 8 - oy }));
+    const ko = [...document.querySelectorAll('.page :is(h1,h2,h3,p,figcaption,.label,.btn,.tx-tag,.tease-more,.num,.ab-stat,.ab-cap,.hx-pill,.ph-list li,.fb-list li,.tier,.pname,.sig,.yr)')].map(sciaRect).map((r) => ({ l: r.l - 8 - ox, r: r.r + 8 - ox, t: r.t - 8 - oy, b: r.b + 8 - oy }));
     const push = (x, y, len, r, rot, el) => { if (sciaIn(ko, x, y)) return; list.push({ x, y, len, r, rot, el, b: rot != null ? sciaBlob(r * 1.35, rnd) : null, teal: rnd() < 0.16, ink: sciaIn(geo.dk, x, y) ? 'd' : sciaIn(geo.lt, x, y) ? 'l' : 'b' }); };
     // few: meno gocce (Esperienza), scie più rade e un solo schizzo per goccia
     for (let L0 = 70 + rnd() * 80; L0 < L - 40; L0 += few ? 260 + rnd() * 220 : 90 + rnd() * 150) {
