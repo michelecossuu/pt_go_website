@@ -1,7 +1,7 @@
 // ─── Contenuto centralizzato del sito ───────────────────────────────────────
 // Modificare qui per aggiornare testi, prezzi e dati in tutta l'app.
-// Foto stock provvisorie (Pexels)
-const px = (id, w = 1400) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
+// Foto stock provvisorie (Pexels), ospitate in locale: nessuna richiesta a server esterni, quindi nessun cookie di terze parti
+const px = (id) => `assets/photos/pexels-${id}.jpg`;
 
 globalThis.window.CONTENT = {
 
@@ -56,7 +56,7 @@ globalThis.window.CONTENT = {
       sub:        'Allenamento su misura per chi vuole risultati reali, senza scorciatoie. Al centro ci sei tu, i tuoi obiettivi, un metodo costruito intorno alla tua quotidianità.',
       ctaPrimary: 'Scopri i pacchetti',
       ctaGhost:   'Prenota una consulenza',
-      photo:      { src: px(5327466, 2200), alt: 'Giuliano in palestra · orizzontale, soggetto sulla destra' },
+      photo:      { src: px(5327466), alt: 'Giuliano in palestra · orizzontale, soggetto sulla destra' },
       pillars: [
         { icon: 'Route',   lines: ['Percorso', 'strutturato'] },
         { icon: 'Barbell', lines: ['Allenamento', 'su misura'] },
@@ -125,7 +125,7 @@ globalThis.window.CONTENT = {
       eyebrow: 'La fatica buona',
       title:   'Quella che ti lascia<br/><em>più forte</em> di prima.',
       text:    'Non le solite schede pre-impostate, ma progressioni strutturate. Ti porto al meglio delle tue potenzialità, con tecnica e recupero.',
-      photo:   { src: px(3838705, 2000), alt: 'Momento di fatica a fine serie · orizzontale, luce scura' },
+      photo:   { src: px(3838705), alt: 'Momento di fatica a fine serie · orizzontale, luce scura' },
       values:  ['Disciplina', 'Costanza', 'Risultati'],
     },
     packTeaser: {
