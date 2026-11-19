@@ -3,14 +3,21 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Giuliano Ortu — Personal Trainer · Monza &amp; Brianza</title>
-<meta name="description" content="Personal Trainer certificato a Monza &amp; Brianza. Allenamento su misura, programmazione, coaching nutrizionale." />
+<title>Giuliano Ortu — Personal Trainer</title>
+<meta name="description" content="Personal Trainer certificato. Percorso strutturato, allenamento su misura, supporto continuo." />
+<link rel="icon" href="assets/logo-mark-ink.png" />
+<meta name="theme-color" content="#f1eee8" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Instrument+Serif:ital@0;1&family=Indie+Flower&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="styles.css" />
+<!-- L'ordine conta: base → tema chiaro → home con foto → freccia → aggiunte locali -->
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/modern.css" />
+<link rel="stylesheet" href="css/home.css" />
+<link rel="stylesheet" href="css/scia.css" />
+<link rel="stylesheet" href="css/site.css" />
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
@@ -19,47 +26,52 @@
 <body>
 <div id="root"></div>
 
-<script type="text/babel" src="content.js"></script>
-<script type="text/babel" src="components.jsx"></script>
-<script type="text/babel" src="page-home.jsx"></script>
-<script type="text/babel" src="page-esperienza.jsx"></script>
-<script type="text/babel" src="page-pacchetti.jsx"></script>
-<script type="text/babel" src="page-contatti.jsx"></script>
+<script type="text/babel" src="js/content.js"></script>
+<script type="text/babel" src="js/components.jsx"></script>
+<script type="text/babel" src="js/page-home.jsx"></script>
+<script type="text/babel" src="js/page-esperienza.jsx"></script>
+<script type="text/babel" src="js/page-pacchetti.jsx"></script>
+<script type="text/babel" src="js/page-contatti.jsx"></script>
+<script type="text/babel" src="js/scia.jsx"></script>
 
 <script type="text/babel">
 const NAV = CONTENT.nav;
 
+// Configurazione definitiva della freccia guida
+const SCIA = { mode: 'through', drops: true, ghost: false, stations: false, w: 5 };
+
 function readRoute() {
   const h = (window.location.hash || '').replace(/^#\/?/, '');
   const [page, ...rest] = h.split('/');
-  if (!page) return { page: 'home', params: {} };
   const params = {};
-  for (let i = 0; i < rest.length; i += 2) {
-    if (rest[i]) params[rest[i]] = decodeURIComponent(rest[i+1] || '');
-  }
-  return { page, params };
+  for (let i = 0; i < rest.length; i += 2) if (rest[i]) params[rest[i]] = decodeURIComponent(rest[i + 1] || '');
+  return { page: NAV.some((n) => n.id === page) ? page : 'home', params };
 }
 
 function App() {
   const [route, setRoute] = React.useState(readRoute());
-  const [scrolled, setScrolled] = React.useState(false);
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [solid, setSolid] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
     const onHash = () => setRoute(readRoute());
+    const onScroll = () => setSolid(window.scrollY > 12);
     window.addEventListener('hashchange', onHash);
-    const onScroll = () => setScrolled(window.scrollY > 12);
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('hashchange', onHash);
-      window.removeEventListener('scroll', onScroll);
-    };
+    onScroll();
+    return () => { window.removeEventListener('hashchange', onHash); window.removeEventListener('scroll', onScroll); };
   }, []);
 
-  React.useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
-    setMobileOpen(false);
-  }, [route.page, route.params.pack]);
+  React.useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); setOpen(false); }, [route.page, route.params.pack]);
+
+  // Su contatti il form è già in pagina: niente CTA "Prenota" (header, menu mobile, barra mobile)
+  const showBar = route.page !== 'contatti';
+  const guide = route.page !== 'pacchetti';
+  // Su Esperienza la freccia percorre solo i passaggi del coaching online
+  const sciaMode = route.page === 'esperienza' ? 'steps' : SCIA.mode;
+  const pageKey = route.page + (route.params.pack || '');
+  const over = route.page === 'home' && !solid && !open;
+  React.useEffect(() => { document.body.classList.toggle('has-mbar', showBar); }, [showBar]);
 
   const go = (page, params = {}) => {
     const tail = Object.entries(params).map(([k, v]) => `${k}/${encodeURIComponent(v)}`).join('/');
@@ -69,101 +81,82 @@ function App() {
     const params = {};
     if (pack) params.pack = pack;
     if (cycle && cycle !== 'mensile') params.cycle = cycle;
-    if (Object.keys(params).length) go('contatti', params);
-    else go('contatti');
+    go('contatti', params);
   };
 
-  let PageComp = null;
   const props = { go, openContact };
-  if (route.page === 'home') PageComp = <PageHome {...props} />;
-  else if (route.page === 'esperienza') PageComp = <PageEsperienza {...props} />;
-  else if (route.page === 'pacchetti') PageComp = <PagePacchetti {...props} />;
-  else if (route.page === 'contatti') PageComp = <PageContatti preselectedPack={route.params.pack} preselectedCycle={route.params.cycle} />;
-  else PageComp = <PageHome {...props} />;
+  const pages = {
+    home: <PageHome {...props} />,
+    esperienza: <PageEsperienza {...props} />,
+    pacchetti: <PagePacchetti {...props} />,
+    contatti: <PageContatti key={route.params.pack || 'none'} preselectedPack={route.params.pack} preselectedCycle={route.params.cycle} />,
+  };
 
-  const year = new Date().getFullYear();
+  const { brand, contact, footer } = CONTENT;
 
   return (
     <>
-      <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
-        <Brand onClick={() => go('home')} />
-        <div className="nav-links">
-          {NAV.map((n) => (
-            <button
-              key={n.id}
-              className={`nav-link ${route.page === n.id ? 'active' : ''}`}
-              onClick={() => go(n.id)}>
-              {n.label}
-            </button>
-          ))}
+      <nav className={`nav ${solid ? 'solid' : ''} ${open ? 'open' : ''} ${over ? 'over' : ''}`}>
+        <div className="nav-in">
+          <Brand light={over} onClick={() => go('home')} />
+          <div className="nav-links">
+            {NAV.map((n) => <button key={n.id} className={`nav-link ${route.page === n.id ? 'on' : ''}`} onClick={() => go(n.id)}>{n.label}</button>)}
+          </div>
+          <div className="nav-end">
+            {showBar && <button className="btn btn-line" onClick={() => openContact()}>Prenota <span className="ar">→</span></button>}
+            <button className="burger" onClick={() => setOpen(!open)} aria-label="Menu" aria-expanded={open}>{open ? <Icons.Close /> : <Icons.Menu />}</button>
+          </div>
         </div>
-        <button className="nav-cta" onClick={() => go('contatti')} style={{visibility: route.page === 'contatti' ? 'hidden' : 'visible'}}>
-          Prenota
-        </button>
-        <button className="nav-burger" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
-          {mobileOpen ? <Icons.Close /> : <Icons.Menu />}
-        </button>
       </nav>
 
-      {mobileOpen && (
-        <div className="mobile-menu">
-          {NAV.map((n) => (
-            <button
-              key={n.id}
-              className={`nav-link ${route.page === n.id ? 'active' : ''}`}
-              onClick={() => go(n.id)}>
-              {n.label}
-            </button>
-          ))}
-          {route.page !== 'contatti' && (
-            <button className="btn btn-primary" style={{marginTop: 24, alignSelf: 'flex-start'}} onClick={() => go('contatti')}>
-              {CONTENT.home.hero.ctaGhost} <span className="arrow">→</span>
-            </button>
-          )}
+      {open && (
+        <div className="mmenu">
+          {NAV.map((n) => <button key={n.id} className={`nav-link ${route.page === n.id ? 'on' : ''}`} onClick={() => go(n.id)}>{n.label}</button>)}
+          {showBar && <button className="btn btn-red" onClick={() => openContact()}>Prenota una consulenza <span className="ar">→</span></button>}
         </div>
       )}
 
-      {PageComp}
+      {pages[route.page]}
 
       <footer className="footer">
-        <div className="footer-inner">
-          <div>
-            <Brand onClick={() => go('home')} />
-            <div className="footer-tagline">
-              <em style={{color: 'var(--red)', fontStyle: 'italic'}}>{CONTENT.brand.tagline}</em><br/>
-              {CONTENT.brand.taglineSub}
+        <div className="wrap">
+          <div className="foot-grid">
+            <div>
+              <Brand onClick={() => go('home')} />
+              <p className="foot-tag"><em>{brand.tagline}</em><span>{brand.taglineSub}</span></p>
+            </div>
+            <div>
+              <h4>{footer.nav}</h4>
+              <ul>{NAV.map((n) => <li key={n.id}><a href={`#/${n.id}`}>{n.label}</a></li>)}</ul>
+            </div>
+            <div>
+              <h4>{footer.contacts}</h4>
+              <ul>
+                <li><a href={contact.phoneTel}>{contact.phone}</a></li>
+                <li><a href={contact.emailHref}>{contact.email}</a></li>
+                <li><a href={contact.instagramUrl} target="_blank" rel="noreferrer">{contact.instagram}</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>{footer.studio}</h4>
+              <ul><li>{contact.address}</li><li>{contact.city}</li><li>{brand.vatId}</li></ul>
             </div>
           </div>
-          <div>
-            <h4>{CONTENT.footer.nav}</h4>
-            <ul>
-              {NAV.map((n) => (
-                <li key={n.id}><a href={`#/${n.id}`}>{n.label}</a></li>
-              ))}
-            </ul>
+          <div className="foot-bot">
+            <span>© {new Date().getFullYear()} {brand.fullName} · {brand.title} · Tutti i diritti riservati</span>
+            <span>{footer.legalLinks}</span>
           </div>
-          <div>
-            <h4>{CONTENT.footer.contacts}</h4>
-            <ul>
-              <li><a href={CONTENT.contact.phoneTel}>{CONTENT.contact.phone}</a></li>
-              <li><a href={CONTENT.contact.emailHref}>{CONTENT.contact.email}</a></li>
-              <li><a href={CONTENT.contact.instagramUrl} target="_blank" rel="noreferrer">{CONTENT.contact.instagram}</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>{CONTENT.footer.studio}</h4>
-            <ul>
-              <li>{CONTENT.contact.address}</li>
-              <li>{CONTENT.contact.city}</li>
-              <li>{CONTENT.brand.vatId}</li>
-            </ul>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <span>© {year} {CONTENT.brand.fullName} · {CONTENT.brand.title} · Tutti i diritti riservati</span>
-          <span>{CONTENT.footer.legalLinks}</span>
         </div>
       </footer>
+
+      {guide && <Scia key={'s' + pageKey} pageKey={pageKey} {...SCIA} mode={sciaMode} />}
+
+      {showBar && (
+        <div className="mbar">
+          <a className="wa" href={contact.whatsappUrl} target="_blank" rel="noreferrer" aria-label="Scrivimi su WhatsApp"><Icons.Chat s={22} /></a>
+          <button className="btn btn-red" onClick={() => openContact()}>Consulenza gratuita <span className="ar">→</span></button>
+        </div>
+      )}
     </>
   );
 }
