@@ -31,7 +31,29 @@ const CustomSelect = ({ id, value, onChange, options, placeholder }) => {
   );
 };
 
-const EMPTY_FORM = { name: '', email: '', phone: '', goal: '', message: '', consent: false };
+const EMPTY_FORM = { name: '', email: '', phone: '', goal: '', message: '', consent: false, website: '' };
+
+const SEND_TIMEOUT_MS = 15000;
+
+// Invia la richiesta alla Web App Apps Script.
+// Content-Type text/plain: evita il preflight CORS, che Apps Script non gestisce.
+const sendLead = async (endpoint, payload) => {
+  if (!endpoint) throw new Error('Endpoint del form non configurato (CONTENT.contatti.form.endpoint)');
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), SEND_TIMEOUT_MS);
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+      signal: ctrl.signal,
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || 'Risposta non valida');
+  } finally {
+    clearTimeout(timer);
+  }
+};
 
 const PageContatti = ({ preselectedPack, preselectedCycle }) => {
   const { contact, contatti } = CONTENT;
@@ -42,6 +64,8 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
   const [sent, setSent] = React.useState(false);
   const [data, setData] = React.useState(EMPTY_FORM);
   const [errors, setErrors] = React.useState({});
+  const [status, setStatus] = React.useState('idle'); // idle | sending | error
+  const startedAt = React.useRef(Date.now());
   const set = (k) => (e) => {
     setData({ ...data, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value });
     if (errors[k]) setErrors({ ...errors, [k]: false });
@@ -59,8 +83,11 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
     setPack(id);
   };
 
-  const submit = (ev) => {
+  const labelOf = (list, key, id) => (list.find((o) => o[key] === id) || {}).label || '';
+
+  const submit = async (ev) => {
     ev.preventDefault();
+    if (status === 'sending') return;
     const e = {};
     if (!data.name.trim()) e.name = true;
     if (!data.email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) e.email = true;
@@ -68,7 +95,29 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
     setErrors(e);
     const first = ['name', 'email', 'consent'].find((k) => e[k]);
     if (first) document.getElementById(first === 'consent' ? 'f-consent' : `f-${first}`)?.focus();
-    if (!Object.keys(e).length) { setSent(true); window.scrollTo({ top: 0 }); }
+    if (Object.keys(e).length) return;
+
+    setStatus('sending');
+    try {
+      await sendLead(form.endpoint, {
+        name:    data.name.trim(),
+        email:   data.email.trim(),
+        phone:   data.phone.trim(),
+        goal:    labelOf(form.goals, 'value', data.goal),
+        pack:    labelOf(form.packOptions, 'id', pack),
+        cycle:   hasCycle(pack) ? labelOf(form.cycleOptions, 'id', cycle) : '',
+        message: data.message.trim(),
+        consent: data.consent,
+        website: data.website,                 // honeypot: deve restare vuoto
+        elapsed: Date.now() - startedAt.current, // ms dalla comparsa del form: invii troppo rapidi = bot
+      });
+      setStatus('idle');
+      setSent(true);
+      window.scrollTo({ top: 0 });
+    } catch (err) {
+      console.error('Invio form contatti fallito:', err);
+      setStatus('error');
+    }
   };
 
   if (sent) {
@@ -79,7 +128,7 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
             <div className="ok"><Icons.Check s={30} /></div>
             <h1 className="h2 h-page">Messaggio <em>ricevuto</em>.</h1>
             <p className="lead">{thankYou.pretext}{data.name.split(' ')[0]}{thankYou.posttext}</p>
-            <button className="btn btn-line" onClick={() => { setSent(false); setData(EMPTY_FORM); setPack(''); }}>{thankYou.reset}</button>
+            <button className="btn btn-line" onClick={() => { setSent(false); setData(EMPTY_FORM); setPack(''); startedAt.current = Date.now(); }}>{thankYou.reset}</button>
           </div>
         </section>
       </div>
@@ -116,7 +165,12 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
               </div>
             </div>
 
-            <form className="form" onSubmit={submit} noValidate>
+            <form className="form" onSubmit={submit} noValidate aria-busy={status === 'sending'}>
+              {/* Honeypot anti-spam: invisibile agli utenti, i bot lo compilano */}
+              <div className="hp" aria-hidden="true">
+                <label htmlFor="f-website">Sito web</label>
+                <input id="f-website" type="text" name="website" tabIndex={-1} autoComplete="off" value={data.website} onChange={set('website')} />
+              </div>
               <div className="frow">
                 <div className={`field ${errors.name ? 'bad' : ''}`}>
                   <label className="flabel" htmlFor="f-name">Nome e cognome *</label>
@@ -170,9 +224,18 @@ const PageContatti = ({ preselectedPack, preselectedCycle }) => {
                   {form.consent.post}
                 </span>
               </label>
+              {status === 'error' && (
+                <p className="fsend-err" role="alert">
+                  {form.sendError.pre}
+                  <a href={contact.whatsappUrl} target="_blank" rel="noreferrer">{form.sendError.link}</a>
+                  {form.sendError.post}
+                </p>
+              )}
               <div className="fsub">
                 <span className="note"><span className="dot"></span>{form.submitNote}</span>
-                <button type="submit" className="btn btn-red">Invia messaggio <span className="ar">→</span></button>
+                <button type="submit" className="btn btn-red" disabled={status === 'sending'}>
+                  {status === 'sending' ? form.sendingLabel : form.submitLabel} <span className="ar">→</span>
+                </button>
               </div>
             </form>
           </div>

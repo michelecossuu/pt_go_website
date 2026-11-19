@@ -344,6 +344,16 @@ globalThis.window.CONTENT = {
         post:         '. Acconsento al trattamento dei miei dati per essere ricontattato: non saranno condivisi con terzi e potranno essere cancellati su richiesta.',
       },
       submitNote:  'Risposta entro 24 ore · Consulenza iniziale gratuita',
+      // URL della Web App Google Apps Script (termina con /exec) — vedi apps-script/README.md
+      endpoint:    '',
+      submitLabel:  'Invia messaggio',
+      sendingLabel: 'Invio in corso...',
+      // Errore di invio: pre + link WhatsApp + post
+      sendError: {
+        pre:  'Invio non riuscito. Riprova tra poco oppure scrivimi su ',
+        link: 'WhatsApp',
+        post: '.',
+      },
     },
     thankYou: {
       pretext:  'Grazie ',

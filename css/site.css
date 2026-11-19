@@ -30,3 +30,9 @@ div.ph.ph-empty{display:grid;place-items:center;padding:24px;background:var(--mi
 
 /* Hero: su desktop 100svh può risultare qualche px più basso della finestra (Safari) e lascia una striscia chiara sotto */
 @media (min-width:721px){.hx{min-height:calc(max(100vh,100svh) + var(--hx-tail))}}
+
+/* Form contatti: honeypot anti-spam, errore di invio, stato di invio */
+.form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.fsend-err{margin:0 0 4px;padding:14px 18px;border-radius:14px;background:var(--blush);color:var(--red-2);font:500 14px/1.5 var(--sans)}
+.fsend-err a{color:inherit;font-weight:600;text-decoration:underline}
+.fsub .btn:disabled{opacity:.6;cursor:progress}
