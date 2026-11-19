@@ -2,3 +2,6 @@
 *.zip
 .claude/
 idea.txt
+# Note e backend solo locali: GitHub Pages pubblicherebbe tutto il repo
+DEPLOY.md
+apps-script/
