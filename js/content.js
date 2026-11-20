@@ -24,13 +24,13 @@ globalThis.window.CONTENT = {
     emailHref:    'mailto:giuliano@ortupt.it',
     instagram:    '@giuliano.ortu.pt',
     instagramUrl: 'https://instagram.com/',
-    privacyUrl:   'privacy.html', // TODO: pagina ancora da creare
-    termsUrl:     'termini.html', // TODO: pagina ancora da creare
+    privacyUrl:   '#/privacy',    // TODO: pagina ancora da creare (js/legal.js)
+    termsUrl:     '#/termini',
     whatsappUrl:  'https://wa.me/393331234567',
     mapsUrl:      'https://maps.google.com/?q=Via+Di+Triuggio+20+Triuggio',
     address:      'Via Di Triuggio 20',
     city:         'Triuggio (MB)',
-    postalCode:   '09131',
+    postalCode:   '20844',
     hours: [
       { label: 'Lunedì — Venerdì', time: '08:00 — 21:00', closed: false },
       { label: 'Sabato',           time: '08:00 — 14:00', closed: false },
@@ -340,7 +340,7 @@ globalThis.window.CONTENT = {
         pre:          'Ho letto e accetto la ',
         privacyLabel: 'privacy policy',
         mid:          ' e i ',
-        termsLabel:   'termini di servizio',
+        termsLabel:   'termini e condizioni',
         post:         '. Acconsento al trattamento dei miei dati per essere ricontattato: non saranno condivisi con terzi e potranno essere cancellati su richiesta.',
       },
       submitNote:  'Risposta entro 24 ore · Consulenza iniziale gratuita',
@@ -366,8 +366,11 @@ globalThis.window.CONTENT = {
   footer: {
     nav:        'Naviga',
     contacts:   'Contatti',
-    studio:     'Studio',
-    legalLinks: 'Privacy · Cookie · Termini',
+    // Link alle pagine legali: compaiono solo quelle già presenti in LEGAL (js/legal.js)
+    legal: [
+      { id: 'privacy', label: 'Privacy' },
+      { id: 'termini', label: 'Termini e condizioni' },
+    ],
   },
 };
 

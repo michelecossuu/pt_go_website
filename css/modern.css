@@ -60,7 +60,7 @@ a:hover{color:var(--red)}
 .quote blockquote{max-width:980px;font:500 clamp(24px,2.8vw,42px)/1.25 var(--serif);letter-spacing:-.02em}
 .quote .who em{color:var(--teal-2)}
 
-.cta{margin:0 var(--pad) clamp(48px,6vw,88px);border:0;border-radius:32px;background:var(--red);color:#fff}
+.cta{margin:0 var(--pad) clamp(32px,4vw,56px);border:0;border-radius:32px;background:var(--red);color:#fff}
 .cta .h2{color:#fff}
 .cta .h2 em{color:#ffe1dc}
 .cta .mark{opacity:.12}
@@ -71,8 +71,8 @@ a:hover{color:var(--red)}
 .cta-note .dot{background:#fff}
 
 .footer{border-top:1px solid var(--line)}
-.foot-tag{font:italic 400 32px/1.2 var(--it)}
-.foot-tag span{margin-top:6px;font:400 17px/1.5 var(--sans)}
+.foot-tag{font:italic 400 22px/1.15 var(--it)}
+.foot-tag span{margin-top:2px;font:400 14px/1.5 var(--sans)}
 
 .bio-txt p{font:400 clamp(19px,1.5vw,22px)/1.55 var(--serif);letter-spacing:-.01em}
 .sig{font:italic 400 44px/1 var(--it)}
@@ -151,7 +151,7 @@ a:hover{color:var(--red)}
 .spec{padding:28px 24px!important}
 .spec+.spec{border-top:0}
 .step{gap:12px;padding:28px 24px}
-.cta{margin:0 12px 48px;border-radius:24px}
+.cta{margin:0 12px 32px;border-radius:24px}
 .quote{border-radius:24px}
 .mbar{background:rgba(250,248,244,.94);box-shadow:0 12px 32px -12px rgba(15,46,46,.3)}
 .mbar .wa{background:var(--mint);color:var(--teal-2)}

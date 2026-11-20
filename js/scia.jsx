@@ -324,7 +324,15 @@ function Scia({ pageKey, mode = 'through', ghost = false, stations = false, drop
 
   const lenAt = (y) => {
     const { env, n, step, L } = s;
-    if (!env || y < env[0]) return 0;
+    if (!env) return 0;
+    // Se la fine della freccia sta più in basso di dove la sonda può arrivare (pagina corta / footer basso),
+    // comprime l'ultimo tratto: a fine scroll la freccia arriva sempre al bottone.
+    const lim = document.documentElement.scrollHeight - window.innerHeight * 0.34 - 2;
+    if (env[n] > lim) {
+      const y0 = lim - window.innerHeight * 0.6;
+      if (y > y0) y = y0 + (y - y0) * (env[n] - y0) / (lim - y0);
+    }
+    if (y < env[0]) return 0;
     if (y >= env[n]) return L;
     let lo = 0, hi = n;
     while (lo < hi) { const m = (lo + hi + 1) >> 1; if (env[m] <= y) lo = m; else hi = m - 1; }

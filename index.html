@@ -28,15 +28,19 @@
 <div id="root"></div>
 
 <script type="text/babel" src="js/content.js"></script>
+<script type="text/babel" src="js/legal.js"></script>
 <script type="text/babel" src="js/components.jsx"></script>
 <script type="text/babel" src="js/page-home.jsx"></script>
 <script type="text/babel" src="js/page-esperienza.jsx"></script>
 <script type="text/babel" src="js/page-pacchetti.jsx"></script>
 <script type="text/babel" src="js/page-contatti.jsx"></script>
+<script type="text/babel" src="js/page-legal.jsx"></script>
 <script type="text/babel" src="js/scia.jsx"></script>
 
 <script type="text/babel">
 const NAV = CONTENT.nav;
+// Pagine legali: raggiungibili da footer e form, ma non nel menu
+const LEGAL_PAGES = Object.keys(LEGAL);
 
 // Configurazione definitiva della freccia guida
 const SCIA = { mode: 'through', drops: true, ghost: false, stations: false, w: 5 };
@@ -46,7 +50,8 @@ function readRoute() {
   const [page, ...rest] = h.split('/');
   const params = {};
   for (let i = 0; i < rest.length; i += 2) if (rest[i]) params[rest[i]] = decodeURIComponent(rest[i + 1] || '');
-  return { page: NAV.some((n) => n.id === page) ? page : 'home', params };
+  const known = NAV.some((n) => n.id === page) || LEGAL_PAGES.includes(page);
+  return { page: known ? page : 'home', params };
 }
 
 function App() {
@@ -67,7 +72,9 @@ function App() {
 
   // Su contatti il form è già in pagina: niente CTA "Prenota" (header, menu mobile, barra mobile)
   const showBar = route.page !== 'contatti';
-  const guide = route.page !== 'pacchetti';
+  const isLegal = LEGAL_PAGES.includes(route.page);
+  // Niente freccia guida su Pacchetti e sulle pagine legali
+  const guide = route.page !== 'pacchetti' && !isLegal;
   // Su Esperienza la freccia percorre solo i passaggi del coaching online
   const sciaMode = route.page === 'esperienza' ? 'steps' : SCIA.mode;
   const pageKey = route.page + (route.params.pack || '');
@@ -91,6 +98,7 @@ function App() {
     esperienza: <PageEsperienza {...props} />,
     pacchetti: <PagePacchetti {...props} />,
     contatti: <PageContatti key={route.params.pack || 'none'} preselectedPack={route.params.pack} preselectedCycle={route.params.cycle} />,
+    ...Object.fromEntries(LEGAL_PAGES.map((id) => [id, <PageLegal key={id} id={id} />])),
   };
 
   const { brand, contact, footer } = CONTENT;
@@ -121,31 +129,23 @@ function App() {
 
       <footer className="footer">
         <div className="wrap">
-          <div className="foot-grid">
-            <div>
-              <Brand onClick={() => go('home')} />
-              <p className="foot-tag"><em>{brand.tagline}</em><span>{brand.taglineSub}</span></p>
-            </div>
-            <div>
-              <h4>{footer.nav}</h4>
-              <ul>{NAV.map((n) => <li key={n.id}><a href={`#/${n.id}`}>{n.label}</a></li>)}</ul>
-            </div>
-            <div>
-              <h4>{footer.contacts}</h4>
-              <ul>
-                <li><a href={contact.phoneTel}>{contact.phone}</a></li>
-                <li><a href={contact.emailHref}>{contact.email}</a></li>
-                <li><a href={contact.instagramUrl} target="_blank" rel="noreferrer">{contact.instagram}</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4>{footer.studio}</h4>
-              <ul><li>{contact.address}</li><li>{contact.city}</li><li>{brand.vatId}</li></ul>
-            </div>
+          <div className="foot-top">
+            <Brand onClick={() => go('home')} />
+            <p className="foot-tag"><em>{brand.tagline}</em><span>{brand.taglineSub}</span></p>
+            <ul className="foot-contacts" aria-label={footer.contacts}>
+              <li><a href={contact.phoneTel}><Icons.Phone s={15} />{contact.phone}</a></li>
+              <li><a href={contact.emailHref}><Icons.Mail s={15} />{contact.email}</a></li>
+              <li><a href={contact.instagramUrl} target="_blank" rel="noreferrer"><Icons.Instagram s={15} />{contact.instagram}</a></li>
+            </ul>
           </div>
           <div className="foot-bot">
-            <span>© {new Date().getFullYear()} {brand.fullName} · {brand.title} · Tutti i diritti riservati</span>
-            <span>{footer.legalLinks}</span>
+            <nav className="foot-nav" aria-label={footer.nav}>
+              {NAV.map((n) => <a key={n.id} href={`#/${n.id}`}>{n.label}</a>)}
+            </nav>
+            <span className="foot-legal">
+              <span>© {new Date().getFullYear()} {brand.fullName} · {brand.title} · {brand.vatId}</span>
+              {footer.legal.filter((l) => LEGAL_PAGES.includes(l.id)).map((l) => <a key={l.id} href={`#/${l.id}`}>{l.label}</a>)}
+            </span>
           </div>
         </div>
       </footer>
