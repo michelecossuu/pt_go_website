@@ -18,17 +18,17 @@ globalThis.window.CONTENT = {
 
   // ── Contatti ──────────────────────────────────────────────────────────────
   contact: {
-    phone:        '+39 333 123 4567',
-    phoneTel:     'tel:+393331234567',
-    email:        'giuliano@ortupt.it',
-    emailHref:    'mailto:giuliano@ortupt.it',
+    phone:        '+39 379 374 3205',
+    phoneTel:     'tel:+393793743205',
+    email:        'info@giulianortu.it',
+    emailHref:    'mailto:info@giulianortu.it',
     instagram:    '@giuliano.ortu.pt',
     instagramUrl: 'https://instagram.com/',
-    privacyUrl:   '#/privacy',    // TODO: pagina ancora da creare (js/legal.js)
+    privacyUrl:   '#/privacy',
     termsUrl:     '#/termini',
-    whatsappUrl:  'https://wa.me/393331234567',
-    mapsUrl:      'https://maps.google.com/?q=Via+Di+Triuggio+20+Triuggio',
-    address:      'Via Di Triuggio 20',
+    whatsappUrl:  'https://wa.me/393793743205',
+    mapsUrl:      'https://maps.google.com/?q=Viale+Susani+20+Triuggio',
+    address:      'Viale Susani 20',
     city:         'Triuggio (MB)',
     postalCode:   '20844',
     hours: [
@@ -341,7 +341,7 @@ globalThis.window.CONTENT = {
         privacyLabel: 'privacy policy',
         mid:          ' e i ',
         termsLabel:   'termini e condizioni',
-        post:         '. Acconsento al trattamento dei miei dati per essere ricontattato: non saranno condivisi con terzi e potranno essere cancellati su richiesta.',
+        post:         '. Acconsento al trattamento dei miei dati per essere ricontattato: non saranno ceduti a terzi e potranno essere cancellati su richiesta.',
       },
       submitNote:  'Risposta entro 24 ore · Consulenza iniziale gratuita',
       // URL della Web App Google Apps Script (termina con /exec) — vedi apps-script/README.md
